@@ -26,13 +26,30 @@ public class RegisterController implements Initializable {
 
 	@FXML
 	private Button registerBtn;
+	
+	@FXML
+	private Button cancelBtn;
 
 	@FXML
-	private void regiser(ActionEvent event) throws Exception {
+	private void handleRegisterBtn(ActionEvent event) throws Exception {
 
 		if (event.getSource() == registerBtn) {
 			Stage stage = new Stage();
 			Parent root = FXMLLoader.load(getClass().getResource("ViewMainChart.fxml"));
+			Scene scene = new Scene(root);
+			stage.setScene(scene);
+			stage.show();
+			((Node) (event.getSource())).getScene().getWindow().hide();
+
+		}
+	}
+	
+	@FXML
+	private void handleCancelBtn(ActionEvent event) throws Exception {
+
+		if (event.getSource() == cancelBtn) {
+			Stage stage = new Stage();
+			Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
 			Scene scene = new Scene(root);
 			stage.setScene(scene);
 			stage.show();
