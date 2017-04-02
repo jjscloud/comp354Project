@@ -31,59 +31,59 @@ import javafx.stage.Stage;
 
 public class LoginController implements Initializable {
 
-	@FXML
-	private Label failedLogin;
+    @FXML
+    private Label failedLogin;
 
-	@FXML
-	private JFXTextField user;
+    @FXML
+    private JFXTextField user;
 
-	@FXML
-	private JFXPasswordField password;
+    @FXML
+    private JFXPasswordField password;
 
-	@FXML
-	private JFXButton login;
+    @FXML
+    private JFXButton login;
 
-	@FXML
-	private JFXButton signup;
+    @FXML
+    private JFXButton signup;
 
-	@FXML
-	private void makeLogin(ActionEvent event) throws Exception {
+    @FXML
+    private void makeLogin(ActionEvent event) throws Exception {
 
-		if (event.getSource() == login) {
-			String userName = user.getText();
-			String pwrd = password.getText();
+        if (event.getSource() == login) {
+            String userName = user.getText();
+            String pwrd = password.getText();
 
-			if (userName.equals("demo") && pwrd.equals("354")) {
-				Stage stage = new Stage();
-				Parent root = FXMLLoader.load(getClass().getResource("ViewMainChart.fxml"));
-				Scene scene = new Scene(root);
-				stage.setScene(scene);
-				stage.show();
-				((Node) (event.getSource())).getScene().getWindow().hide();
-			} else {
-				failedLogin.setText("Username or Password invalid!");
-			}
+            if (userName.equals("demo") && pwrd.equals("354")) {
+                Stage stage = new Stage();
+                Parent root = FXMLLoader.load(getClass().getResource("ViewMainChart.fxml"));
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+                ((Node) (event.getSource())).getScene().getWindow().hide();
+            } else {
+                failedLogin.setText("Username or Password invalid!");
+            }
 
-		}
+        }
 
-	}
+    }
 
-	@FXML
-	private void signUp(ActionEvent event) throws Exception {
-		if (event.getSource() == signup) {
-			Stage stage = new Stage();
-			Parent root = FXMLLoader.load(getClass().getResource("Register.fxml"));
-			Scene scene = new Scene(root);
-			stage.setScene(scene);
-			stage.show();
-			((Node) (event.getSource())).getScene().getWindow().hide();
-		}
+    @FXML
+    private void signUp(ActionEvent event) throws Exception {
+        if (event.getSource() == signup) {
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("Register.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+            ((Node) (event.getSource())).getScene().getWindow().hide();
+        }
 
-	}
+    }
 
-	@Override
-	public void initialize(URL url, ResourceBundle rb) {
-		// TODO
-	}
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        // TODO
+    }
 
 }

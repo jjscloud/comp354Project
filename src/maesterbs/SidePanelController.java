@@ -33,63 +33,67 @@ import javafx.stage.Stage;
 
 public class SidePanelController implements Initializable {
 
-	@FXML
-	private JFXButton changePwrdBtn;
+    @FXML
+    private JFXButton changePwrdBtn;
 
-	@FXML
-	private JFXButton helpBtn;
+    @FXML
+    private JFXButton helpBtn;
 
-	@FXML
-	private JFXButton contactBtn;
+    @FXML
+    private JFXButton contactBtn;
 
-	@FXML
-	void handleChangePwrdBtn(ActionEvent event) throws IOException {
-		if(event.getSource() == changePwrdBtn) {
+    @FXML
+    void handleChangePwrdBtn(ActionEvent event) throws IOException {
+        if(event.getSource() == changePwrdBtn) {
+
             Stage stage = new Stage();
             Parent root = FXMLLoader.load(getClass().getResource("ChangePassword.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
             ((Node) (event.getSource())).getScene().getWindow().hide();
-           
-            
+
+
         }
 
-	}
+    }
 
-	@FXML
-	void handleHelpBtn(ActionEvent event) throws IOException {
-		if(event.getSource() == helpBtn) {
+    @FXML
+    void handleHelpBtn(ActionEvent event) throws IOException {
+        if(event.getSource() == helpBtn) {
+
             Stage stage = new Stage();
             Parent root = FXMLLoader.load(getClass().getResource("Help.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
             ((Node) (event.getSource())).getScene().getWindow().hide();
-            
-            
+
+
         }
 
-	}
-	
-	@FXML
-	void handleContactBtn(ActionEvent event) throws IOException {
-		if(event.getSource() == contactBtn) {
+    }
+
+    @FXML
+    void handleContactBtn(ActionEvent event) throws IOException {
+        if(event.getSource() == contactBtn) {
+
             Stage stage = new Stage();
             Parent root = FXMLLoader.load(getClass().getResource("Contact.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
             ((Node) (event.getSource())).getScene().getWindow().hide();
-            
-            
+
+
         }
 
-	}
+    }
 
-	@Override
-	public void initialize(URL url, ResourceBundle rb) {
-		// TODO
-	}
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        // TODO
+    }
 
 }
+

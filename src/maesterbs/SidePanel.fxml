@@ -4,9 +4,10 @@
 <?import javafx.scene.layout.VBox?>
 
 <VBox prefHeight="200.0" prefWidth="190.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="maesterbs.SidePanelController">
-	<children>
-		<JFXButton fx:id="changePwrdBtn" buttonType="RAISED" onAction="#handleChangePwrdBtn" prefHeight="66.0" prefWidth="199.0" stylesheets="@SidePanel.css" text="Change Password" />
-		<JFXButton fx:id="helpBtn" buttonType="RAISED" onAction="#handleHelpBtn" prefHeight="66.0" prefWidth="206.0" stylesheets="@SidePanel.css" text="Help" />
-		<JFXButton fx:id="contactBtn" buttonType="RAISED" onAction="#handleContactBtn" prefHeight="66.0" prefWidth="204.0" stylesheets="@SidePanel.css" text="Contact" />
-	</children>
+    <children>
+        <JFXButton fx:id="changePwrdBtn" buttonType="RAISED" onAction="#handleChangePwrdBtn" prefHeight="66.0" prefWidth="199.0" stylesheets="@SidePanel.css" text="Change Password" />
+        <JFXButton fx:id="helpBtn" buttonType="RAISED" onAction="#handleHelpBtn" prefHeight="66.0" prefWidth="206.0" stylesheets="@SidePanel.css" text="Help" />
+        <JFXButton fx:id="contactBtn" buttonType="RAISED" onAction="#handleContactBtn" prefHeight="66.0" prefWidth="204.0" stylesheets="@SidePanel.css" text="Contact" />
+    </children>
 </VBox>
+

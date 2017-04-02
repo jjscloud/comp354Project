@@ -30,44 +30,45 @@ import javafx.scene.layout.VBox;
 
 public class ViewMainChartController implements Initializable {
 
-	@FXML
-	private JFXHamburger hamburger;
-	@FXML
-	private LineChart<?, ?> mainChart;
+    @FXML
+    private JFXHamburger hamburger;
+    @FXML
+    private LineChart<?, ?> mainChart;
 
-	@FXML
-	private CategoryAxis xAxis;
+    @FXML
+    private CategoryAxis xAxis;
 
-	@FXML
-	private NumberAxis yAxis;
+    @FXML
+    private NumberAxis yAxis;
 
-	@FXML
-	private JFXDrawer drawer;
+    @FXML
+    private JFXDrawer drawer;
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
 
-		try {
+        try {
 
-			VBox box = FXMLLoader.load(getClass().getResource("SidePanel.fxml"));
+            VBox box = FXMLLoader.load(getClass().getResource("SidePanel.fxml"));
 
-			drawer.setSidePane(box);
-			HamburgerBackArrowBasicTransition burger = new HamburgerBackArrowBasicTransition(hamburger);
-			burger.setRate(-1);
-			hamburger.addEventHandler(MouseEvent.MOUSE_PRESSED, (e) -> {
-				burger.setRate(burger.getRate() * -1);
-				burger.play();
+            drawer.setSidePane(box);
+            HamburgerBackArrowBasicTransition burger = new HamburgerBackArrowBasicTransition(hamburger);
+            burger.setRate(-1);
+            hamburger.addEventHandler(MouseEvent.MOUSE_PRESSED, (e) -> {
+                burger.setRate(burger.getRate() * -1);
+                burger.play();
 
-				if (drawer.isShown()) {
-					drawer.close();
-				} else {
-					drawer.open();
-				}
-			});
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+                if (drawer.isShown()) {
+                    drawer.close();
+                } else {
+                    drawer.open();
+                }
+            });
+        } catch (IOException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
 
-	}
+    }
 }
+

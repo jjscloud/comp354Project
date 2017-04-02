@@ -24,43 +24,43 @@ import javafx.stage.Stage;
 
 public class RegisterController implements Initializable {
 
-	@FXML
-	private Button registerBtn;
-	
-	@FXML
-	private Button cancelBtn;
+    @FXML
+    private Button registerBtn;
 
-	@FXML
-	private void handleRegisterBtn(ActionEvent event) throws Exception {
+    @FXML
+    private Button cancelBtn;
 
-		if (event.getSource() == registerBtn) {
-			Stage stage = new Stage();
-			Parent root = FXMLLoader.load(getClass().getResource("ViewMainChart.fxml"));
-			Scene scene = new Scene(root);
-			stage.setScene(scene);
-			stage.show();
-			((Node) (event.getSource())).getScene().getWindow().hide();
+    @FXML
+    private void handleRegisterBtn(ActionEvent event) throws Exception {
 
-		}
-	}
-	
-	@FXML
-	private void handleCancelBtn(ActionEvent event) throws Exception {
+        if (event.getSource() == registerBtn) {
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("ViewMainChart.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+            ((Node) (event.getSource())).getScene().getWindow().hide();
 
-		if (event.getSource() == cancelBtn) {
-			Stage stage = new Stage();
-			Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
-			Scene scene = new Scene(root);
-			stage.setScene(scene);
-			stage.show();
-			((Node) (event.getSource())).getScene().getWindow().hide();
+        }
+    }
 
-		}
-	}
+    @FXML
+    private void handleCancelBtn(ActionEvent event) throws Exception {
 
-	@Override
-	public void initialize(URL url, ResourceBundle rb) {
-		// TODO
-	}
+        if (event.getSource() == cancelBtn) {
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+            ((Node) (event.getSource())).getScene().getWindow().hide();
+
+        }
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        // TODO
+    }
 
 }
