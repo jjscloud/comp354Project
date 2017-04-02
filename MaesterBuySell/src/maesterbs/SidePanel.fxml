@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="330.0" prefWidth="190.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <JFXButton buttonType="RAISED" prefHeight="66.0" prefWidth="193.0" stylesheets="@SidePanel.css" text="Preferences" />
+      <JFXButton buttonType="RAISED" prefHeight="66.0" prefWidth="199.0" stylesheets="@SidePanel.css" text="Help" />
+      <JFXButton buttonType="RAISED" prefHeight="66.0" prefWidth="206.0" stylesheets="@SidePanel.css" text="FAQ" />
+      <JFXButton buttonType="RAISED" prefHeight="66.0" prefWidth="208.0" stylesheets="@SidePanel.css" text="Account Information" />
+      <JFXButton buttonType="RAISED" prefHeight="66.0" prefWidth="204.0" stylesheets="@SidePanel.css" text="Exit" />
+   </children>
+</VBox>
