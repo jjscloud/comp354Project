@@ -12,7 +12,6 @@
  *     Charles Boudreau (27717679), Jordan Senosiain (26638538), Claudiu Bacisor(27735332)
  **/
 
-
 package maesterbs;
 
 import java.net.URL;
@@ -90,7 +89,6 @@ public class DataCollector {
             hDRanges.add(5);
         }
     }
-
     //Private Inner class StockDataDownloader
     private class StockDataDownloader {
 
@@ -182,7 +180,6 @@ public class DataCollector {
     public ArrayList<Double> shortTermMAs; //short term moving averages
     public ArrayList<Double> longTermMAs; //long term moving averages
     public ArrayList<Indicators> indicators; //indicators: buy, sell or none
-
     public ArrayList<String> stockComponentsOfDow;
     public ArrayList<Integer> historicalDataRanges;
     public ArrayList<Integer> movingAverageRanges;
@@ -197,7 +194,6 @@ public class DataCollector {
         shortTermMAs = null;
         longTermMAs = null;
         indicators = null;
-
 
         stockComponentsOfDow = null;
         historicalDataRanges = null;
@@ -219,7 +215,6 @@ public class DataCollector {
     public ArrayList<String> getStocks(){return stockComponentsOfDow;}
     public ArrayList<Integer> getHistoricalDataRanges(){return historicalDataRanges;}
     public ArrayList<Integer> getMovingAverageRanges(){return movingAverageRanges;}
-
     public double getMaxClosingPrice(){return maxClosingPrice;}
 
 
@@ -318,7 +313,6 @@ public class DataCollector {
         }
     }
 
-
     // internal method to update indicators
     private void UpdateIndicators()
     {
@@ -370,4 +364,3 @@ public class DataCollector {
         indicators.trimToSize();
     }
 }
-

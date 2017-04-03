@@ -28,26 +28,26 @@ import javafx.stage.Stage;
 
 public class ContactController implements Initializable {
 
-	@FXML
-	private JFXButton homeBtn;
+    @FXML
+    private JFXButton homeBtn;
 
-	@FXML
-	private void handleHomeBtn(ActionEvent event) throws Exception {
+    @FXML
+    private void handleHomeBtn(ActionEvent event) throws Exception {
 
-		if (event.getSource() == homeBtn) {
-			Stage stage = new Stage();
-			Parent root = FXMLLoader.load(getClass().getResource("ViewMainChart.fxml"));
-			Scene scene = new Scene(root);
-			stage.setScene(scene);
-			stage.show();
-			((Node) (event.getSource())).getScene().getWindow().hide();
+        if (event.getSource() == homeBtn) {
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("ViewMainChart.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+            ((Node) (event.getSource())).getScene().getWindow().hide();
 
-		}
-	}
+        }
+    }
 
-	@Override
-	public void initialize(URL url, ResourceBundle rb) {
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
 
-	}
+    }
 
 }
