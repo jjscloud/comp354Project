@@ -71,3 +71,4 @@ public class ViewMainChartController implements Initializable {
 
     }
 }
+
