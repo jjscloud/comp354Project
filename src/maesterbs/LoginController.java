@@ -56,7 +56,9 @@ public class LoginController implements Initializable {
             if (userName.equals("demo") && pwrd.equals("354")) {
                 Stage stage = new Stage();
                 Parent root = FXMLLoader.load(getClass().getResource("ViewMainChart.fxml"));
+
                 Scene scene = new Scene(root);
+                scene.getStylesheets().add(getClass().getResource("MainChartView.css").toExternalForm());
                 stage.setScene(scene);
                 stage.show();
                 ((Node) (event.getSource())).getScene().getWindow().hide();

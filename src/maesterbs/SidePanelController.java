@@ -45,7 +45,6 @@ public class SidePanelController implements Initializable {
     @FXML
     void handleChangePwrdBtn(ActionEvent event) throws IOException {
         if(event.getSource() == changePwrdBtn) {
-
             Stage stage = new Stage();
             Parent root = FXMLLoader.load(getClass().getResource("ChangePassword.fxml"));
             Scene scene = new Scene(root);
@@ -61,7 +60,6 @@ public class SidePanelController implements Initializable {
     @FXML
     void handleHelpBtn(ActionEvent event) throws IOException {
         if(event.getSource() == helpBtn) {
-
             Stage stage = new Stage();
             Parent root = FXMLLoader.load(getClass().getResource("Help.fxml"));
             Scene scene = new Scene(root);
@@ -77,7 +75,6 @@ public class SidePanelController implements Initializable {
     @FXML
     void handleContactBtn(ActionEvent event) throws IOException {
         if(event.getSource() == contactBtn) {
-
             Stage stage = new Stage();
             Parent root = FXMLLoader.load(getClass().getResource("Contact.fxml"));
             Scene scene = new Scene(root);
@@ -96,4 +93,3 @@ public class SidePanelController implements Initializable {
     }
 
 }
-

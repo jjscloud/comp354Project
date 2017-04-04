@@ -10,4 +10,3 @@
         <JFXButton fx:id="contactBtn" buttonType="RAISED" onAction="#handleContactBtn" prefHeight="66.0" prefWidth="204.0" stylesheets="@SidePanel.css" text="Contact" />
     </children>
 </VBox>
-
