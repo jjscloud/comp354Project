@@ -38,24 +38,16 @@ import javafx.scene.layout.VBox;
 
 public class MainChartViewController implements Initializable {
 
-    // public ArrayList<Double> closingPrices;
-    // public ArrayList<Double> shortTermMAs; //short term moving averages
-    // public ArrayList<Double> longTermMAs; //long term moving averages
-    // public ArrayList<Indicators> indicators; //indicators: buy, sell or none
-
-    XYChart.Series closingProice;
-    XYChart.Series shortTermMA;
-    XYChart.Series longTermMA;
-    XYChart.Series indicatorsBUY;
-    XYChart.Series indicatorsSELL;
+    XYChart.Series closingPrice;
+    XYChart.Series shortTermMA; //short term moving averages
+    XYChart.Series longTermMA; //long term moving averages
+    XYChart.Series indicatorsBUY; //indicators: buy
+    XYChart.Series indicatorsSELL; //indicators: sell
     XYChart.Series closingPriceMax;
 
     ArrayList<String> stocks;
     ArrayList<Integer> hDRanges;
     ArrayList<Integer> mARanges;
-
-    //ObservableList<Integer> historicalRange = FXCollections.observableArrayList(5, 2, 1);
-    //ObservableList<Integer> movingArverages = FXCollections.observableArrayList(20, 50, 100, 200);
 
     @FXML
     private JFXHamburger hamburger;
@@ -99,7 +91,7 @@ public class MainChartViewController implements Initializable {
 
         prepareToDrawCharts(obj);
 
-        mainChart.getData().addAll(closingProice, longTermMA, shortTermMA, indicatorsBUY, indicatorsSELL); //actually draw chart
+        mainChart.getData().addAll(closingPrice, shortTermMA, longTermMA, indicatorsSELL, indicatorsBUY); //actually draw chart
     }
 
     private GregorianCalendar calculateStartDate(int HistoricalDataRange) {
@@ -110,48 +102,25 @@ public class MainChartViewController implements Initializable {
         return newDate;
     }
 
-   /* private Polyline drawUpArrow()
-    {
-        Polyline polyline = new Polyline();
-        polyline.setStroke(Color.GREEN);
-
-        polyline.getPoints().addAll(new Double[]{
-                0.0, 100.0,
-                50.0, 0.0,
-                100.0, 100.0 });
-        return polyline;
-    }
-
-    private Polyline drawDownArrow()
-    {
-        Polyline polyline = new Polyline();
-        polyline.setStroke(Color.RED);
-
-        polyline.getPoints().addAll(new Double[]{
-                0.0, 100.0,
-                50.0, 0.0,
-                100.0, 100.0 });
-        return polyline;
-    }*/
-
     private void prepareToDrawCharts(DataCollector obj)
     {
-        closingProice = new XYChart.Series<>();
+        closingPrice = new XYChart.Series<>();
         shortTermMA = new XYChart.Series<>();
         longTermMA = new XYChart.Series<>();
         indicatorsBUY = new XYChart.Series<>();
         indicatorsSELL = new XYChart.Series<>();
-        //closingPriceMax = new XYChart.Series<>();
 
+        closingPrice.setName("Closing Prices");
+        shortTermMA.setName("Moving Average-" + movingAverageRangeBox.getValue() + " days");
+        longTermMA.setName("Moving Average- 300 days");
+        indicatorsBUY.setName("BUY");
+        indicatorsSELL.setName("SELL");
 
         for (int counter = 0; counter < obj.getClosingPrices().size(); counter++) {
-            //xAxis.setTickLabelsVisible(false);
-            //closingPriceMax.getData().add(new XYChart.Data(Integer.toString(counter), obj.getMaxClosingPrice())); // to help with scaling fo chart
-
 
             if (obj.getClosingPrices().get(counter) == -1) {
             } else {
-                closingProice.getData()
+                closingPrice.getData()
                         .add(new XYChart.Data(Integer.toString(counter), obj.getClosingPrices().get(counter)));
             }
             if (obj.getLongTermMAs().get(counter) == -1) {
@@ -175,11 +144,11 @@ public class MainChartViewController implements Initializable {
                 indicatorsBUY.getData().add(new XYChart.Data(Integer.toString(counter), obj.getMaxClosingPrice() - 0.2 *obj.getMaxClosingPrice()));
             }
         }
+
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
 
         //GregorianCalendar end = new GregorianCalendar();
         DataCollector obj = new DataCollector();
@@ -197,11 +166,6 @@ public class MainChartViewController implements Initializable {
         historicalDataRangeBox.setValue(hDRanges.get(0));
         movingAverageRangeBox.setItems(movingAverageRanges);
         movingAverageRangeBox.setValue(mARanges.get(0));
-
-        //obj.UpdateData(stockChoice.getValue(), movingAverageRangeBox.getValue(),
-                //calculateStartDate(historicalDataRangeBox.getValue()), end);
-
-        // ArrayList<Double> prices = new ArrayList<Double>();
 
         try {
 
@@ -224,9 +188,6 @@ public class MainChartViewController implements Initializable {
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
-
-        //prepareToDrawCharts(obj);
-
 
     }
 }

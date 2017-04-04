@@ -162,12 +162,7 @@ public class DataCollector {
             {
                 System.out.println(e);
             }
-
         }
-
-        //public ArrayList<GregorianCalendar> getDates(){return dates;}
-        //public ArrayList<Double> getCloses(){return closes;}
-        //public ArrayList<Double> getAdjCloses(){return adjcloses;}
 
     }
     // End of StockDataDownloader
@@ -222,12 +217,7 @@ public class DataCollector {
     {
         //when update is called, clear past data
         closingPrices = new ArrayList<Double>();
-        //shortTermMAs = new ArrayList<Double>();
-        //longTermMAs = new ArrayList<Double>();
         maxClosingPrice = 0;
-
-        //double shortTermMASum = 0;
-        //double longTermMASum = 0;
 
         //access stock information
         StockDataDownloader currentStockData= new StockDataDownloader(symbol, start, end);
