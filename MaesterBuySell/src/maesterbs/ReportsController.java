@@ -14,15 +14,10 @@ package maesterbs;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.ResourceBundle;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
-import com.jfoenix.transitions.hamburger.HamburgerNextArrowBasicTransition;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -36,11 +31,8 @@ import javafx.scene.Scene;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class ReportsController implements Initializable {
@@ -105,7 +97,7 @@ public class ReportsController implements Initializable {
     void handleHomeBtn(ActionEvent event) throws IOException {
     	if (event.getSource() == homeBtn) {
 			Stage stage = new Stage();
-			Parent root = FXMLLoader.load(getClass().getResource("ViewMainChart.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("MainChartView.fxml"));
 			Scene scene = new Scene(root);
 			stage.setScene(scene);
 			stage.show();

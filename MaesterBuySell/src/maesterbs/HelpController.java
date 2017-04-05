@@ -23,7 +23,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 public class HelpController implements Initializable {
@@ -36,7 +35,7 @@ public class HelpController implements Initializable {
 
         if (event.getSource() == homeBtn) {
             Stage stage = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("ViewMainChart.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("MainChartView.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
@@ -51,4 +50,3 @@ public class HelpController implements Initializable {
     }
 
 }
-

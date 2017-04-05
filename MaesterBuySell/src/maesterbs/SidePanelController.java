@@ -17,6 +17,8 @@ import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 
+
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,6 +27,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
+
 import javafx.stage.Stage;
 
 
@@ -60,9 +63,12 @@ public class SidePanelController implements Initializable {
 
 	}
 
+
+
 	@FXML
 	void handleHelpBtn(ActionEvent event) throws IOException {
 		if(event.getSource() == helpBtn) {
+
 
 			Stage stage = new Stage();
 			Parent root = FXMLLoader.load(getClass().getResource("Help.fxml"));
@@ -72,6 +78,17 @@ public class SidePanelController implements Initializable {
 			((Node) (event.getSource())).getScene().getWindow().hide();
 
 
+
+
+
+
+
+
+
+
+
+
+
 		}
 
 	}
@@ -79,6 +96,10 @@ public class SidePanelController implements Initializable {
 	@FXML
 	void handleContactBtn(ActionEvent event) throws IOException {
 		if(event.getSource() == contactBtn) {
+
+
+
+
 
 			Stage stage = new Stage();
 			Parent root = FXMLLoader.load(getClass().getResource("Contact.fxml"));
@@ -90,12 +111,16 @@ public class SidePanelController implements Initializable {
 
 		}
 
+
 	}
 	
 	
 	@FXML
 	void handleReportsBtn(ActionEvent event) throws IOException {
 		if(event.getSource() == reportsBtn) {
+
+
+
 
 			Stage stage = new Stage();
 			Parent root = FXMLLoader.load(getClass().getResource("Reports.fxml"));
@@ -107,6 +132,7 @@ public class SidePanelController implements Initializable {
 
 		}
 
+
 	}
 	
 		
@@ -117,6 +143,7 @@ public class SidePanelController implements Initializable {
 		if(!obj.getRpt()){
 			vbox.getChildren().remove(reportsBtn);
 		}
+
 	}
 
 }

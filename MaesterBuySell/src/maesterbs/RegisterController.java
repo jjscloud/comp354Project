@@ -35,7 +35,7 @@ public class RegisterController implements Initializable {
 
         if (event.getSource() == registerBtn) {
             Stage stage = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("ViewMainChart.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("MainChartView.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();

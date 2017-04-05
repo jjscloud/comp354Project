@@ -32,8 +32,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-//import javafx.scene.shape.Polyline;
-//import javafx.scene.paint.Color;
 
 
 public class MainChartViewController implements Initializable {
