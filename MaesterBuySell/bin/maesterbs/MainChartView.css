@@ -1,0 +1,55 @@
+/*closingProice, shortTermMA, longTermMA, indicatorsBUY, indicatorsSELL*/
+
+.chart-symbol {/* solid circle */
+    -fx-background-color: #ff6600;
+    -fx-stroke: #ff6600;
+    -fx-stroke-width: 1;
+    -fx-background-radius: 0;
+    -fx-padding: 1px;
+}
+
+.chart-legend-item-symbol{
+    -fx-padding: 5px;
+}
+
+.default-color1.chart-symbol {
+    -fx-background-color: #00ccff;
+    -fx-stroke: #00ccff;
+}
+.default-color2.chart-symbol {
+    -fx-background-color: #000099;
+    -fx-stroke: #000099;
+}
+
+.default-color3.chart-symbol {/* solid inverted triangle */
+    -fx-background-color: #ff0000;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-padding: 7px;
+    -fx-shape: "M5,8 L10,0 L0,0 Z";
+}
+.default-color4.chart-symbol { /* solid triangle */
+    -fx-background-color: #00cc00;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-padding: 7px;
+    -fx-shape: "M5,0 L10,8 L0,8 Z";
+}
+.default-color5.chart-symbol { /* hollow circle */
+    -fx-background-color: #860061, white;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px;
+}
+.default-color6.chart-symbol { /* hollow square */
+    -fx-background-color: #c62b00, white;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 0;
+}
+.default-color7.chart-symbol { /* hollow diamond */
+    -fx-background-color: #ff5700, white;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0, 2.5;
+    -fx-padding: 7px 5px 7px 5px;
+    -fx-shape: "M5,0 L10,9 L5,18 L0,9 Z";
+}

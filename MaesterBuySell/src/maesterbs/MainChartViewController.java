@@ -9,7 +9,6 @@
  *     Charles Boudreau (27717679), Jordan Senosiain (26638538), Claudiu Bacisor(27735332)
  **/
 
-
 package maesterbs;
 
 import java.io.IOException;
@@ -18,7 +17,6 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.ResourceBundle;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
@@ -29,52 +27,42 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
+import javafx.scene.chart.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import maesterbs.DataCollector;
-import maesterbs.DataCollector.Indicators;
+//import javafx.scene.shape.Polyline;
+//import javafx.scene.paint.Color;
 
-public class MainChartViewController implements Initializable{
-	
-	
-	
-	    // public ArrayList<Double> closingPrices;
-	    // public ArrayList<Double> shortTermMAs; //short term moving averages
-	    //public ArrayList<Double> longTermMAs; //long term moving averages
-	    //public ArrayList<Indicators> indicators; //indicators: buy, sell or none
-	    
-	XYChart.Series closingProice= new XYChart.Series<>();
-	XYChart.Series shortTermMA= new XYChart.Series<>();
-	XYChart.Series longTermMA= new XYChart.Series<>();
-	
-	
-	
-	
-	ObservableList<String> stock = FXCollections.observableArrayList("JNJ","(MMM)","UnitedTechnologiesr","WalMartStores");
-	ObservableList<Integer>  historicalRange= FXCollections.observableArrayList(5,2,1);
-	ObservableList<Integer> movingArverages = FXCollections.observableArrayList(20,50,100,200);
 
+public class MainChartViewController implements Initializable {
+
+    XYChart.Series closingPrice;
+    XYChart.Series shortTermMA; //short term moving averages
+    XYChart.Series longTermMA; //long term moving averages
+    XYChart.Series indicatorsBUY; //indicators: buy
+    XYChart.Series indicatorsSELL; //indicators: sell
+    XYChart.Series closingPriceMax;
+
+    ArrayList<String> stocks;
+    ArrayList<Integer> hDRanges;
+    ArrayList<Integer> mARanges;
 
     @FXML
     private JFXHamburger hamburger;
 
     @FXML
-    private ChoiceBox<Integer> HistoricalDataRange;
+    private ChoiceBox<Integer> historicalDataRangeBox;
 
     @FXML
-    private ChoiceBox<Integer> movingAverageRange;
+    private ChoiceBox<Integer> movingAverageRangeBox;
 
     @FXML
     private ChoiceBox<String> stockChoice;
 
     @FXML
-    private LineChart<?, ?> mainChart;
+    private ScatterChart<?, ?> mainChart;
 
     @FXML
     private CategoryAxis xAxis;
@@ -90,76 +78,116 @@ public class MainChartViewController implements Initializable{
 
     @FXML
     void showMovingAverage(ActionEvent event) {
-     mainChart.getData().addAll(closingProice,longTermMA,shortTermMA);
-    }
-   
-    private GregorianCalendar calculateStartDate(int  HistoricalDataRange) {
-        GregorianCalendar newDate = new GregorianCalendar(); 
 
-        newDate.add(newDate.YEAR, -  HistoricalDataRange);
+
+        GregorianCalendar end = new GregorianCalendar();
+        DataCollector obj = new DataCollector();
+
+        obj.UpdateData(stockChoice.getValue(), movingAverageRangeBox.getValue(),
+                calculateStartDate(historicalDataRangeBox.getValue()), end);
+
+        //clear old chart data
+        mainChart.getData().clear();
+
+        prepareToDrawCharts(obj);
+
+        mainChart.getData().addAll(closingPrice, shortTermMA, longTermMA, indicatorsSELL, indicatorsBUY); //actually draw chart
+    }
+
+    private GregorianCalendar calculateStartDate(int HistoricalDataRange) {
+        GregorianCalendar newDate = new GregorianCalendar();
+
+        newDate.add(newDate.YEAR, -HistoricalDataRange);
 
         return newDate;
     }
-    
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		
-		stockChoice.setItems(stock);
-		stockChoice.setValue("JNJ");
-		movingAverageRange.setItems(movingArverages);
-		movingAverageRange.setValue(20);
-		HistoricalDataRange.setItems(historicalRange);
-		HistoricalDataRange.setValue(5);
-		
-	   GregorianCalendar end = new GregorianCalendar();
-       DataCollector obj = new DataCollector();
-       
-       obj.UpdateData(stockChoice.getValue(), movingAverageRange.getValue(), calculateStartDate(HistoricalDataRange.getValue()), end);	
-       
-       
-       // ArrayList<Double> prices = new ArrayList<Double>();
-		
-		try {
+    private void prepareToDrawCharts(DataCollector obj)
+    {
+        closingPrice = new XYChart.Series<>();
+        shortTermMA = new XYChart.Series<>();
+        longTermMA = new XYChart.Series<>();
+        indicatorsBUY = new XYChart.Series<>();
+        indicatorsSELL = new XYChart.Series<>();
 
-			VBox box = FXMLLoader.load(getClass().getResource("SidePanel.fxml"));
+        closingPrice.setName("Closing Prices");
+        shortTermMA.setName("Moving Average-" + movingAverageRangeBox.getValue() + " days");
+        longTermMA.setName("Moving Average- 300 days");
+        indicatorsBUY.setName("BUY");
+        indicatorsSELL.setName("SELL");
 
-			drawer.setSidePane(box);
-			HamburgerBackArrowBasicTransition burger = new HamburgerBackArrowBasicTransition(hamburger);
-			burger.setRate(-1);
-			hamburger.addEventHandler(MouseEvent.MOUSE_PRESSED, (e)->{
-				burger.setRate(burger.getRate() * -1);
-				burger.play();
+        for (int counter = 0; counter < obj.getClosingPrices().size(); counter++) {
 
-				if (drawer.isShown()){
-					drawer.close();
-				}else{
-					drawer.open();
-				}
-			});
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}	
-		
-		for (int counter=0;counter<obj.getClosingPrices().size();counter++){
-			xAxis.setTickLabelsVisible(false);
-			if (obj.getClosingPrices().get(counter)==-1){
-			}else{
-				closingProice.getData().add(new XYChart.Data(Integer.toString(counter), obj.getClosingPrices().get(counter)));
-			}
-			if (obj.getLongTermMAs().get(counter)==-1){
-				
-			}else{
-				longTermMA.getData().add(new XYChart.Data(Integer.toString(counter), obj.getLongTermMAs().get(counter)));
-			}
-			if(obj.getShortTermMAs().get(counter)==-1){
-				
-			} else {
-				shortTermMA.getData().add(new XYChart.Data(Integer.toString(counter), obj.getShortTermMAs().get(counter)));
-			}
-		}
-		
-	}
+            if (obj.getClosingPrices().get(counter) == -1) {
+            } else {
+                closingPrice.getData()
+                        .add(new XYChart.Data(Integer.toString(counter), obj.getClosingPrices().get(counter)));
+            }
+            if (obj.getLongTermMAs().get(counter) == -1) {
+
+            } else {
+                longTermMA.getData()
+                        .add(new XYChart.Data(Integer.toString(counter), obj.getLongTermMAs().get(counter)));
+            }
+            if (obj.getShortTermMAs().get(counter) == -1) {
+
+            } else {
+                shortTermMA.getData()
+                        .add(new XYChart.Data(Integer.toString(counter), obj.getShortTermMAs().get(counter)));
+            }
+            if(obj.getIndicators().get(counter) == DataCollector.Indicators.SELL)
+            {
+                indicatorsSELL.getData().add(new XYChart.Data(Integer.toString(counter), obj.getMaxClosingPrice() - 0.2 *obj.getMaxClosingPrice()));
+            }
+            if(obj.getIndicators().get(counter) == DataCollector.Indicators.BUY)
+            {
+                indicatorsBUY.getData().add(new XYChart.Data(Integer.toString(counter), obj.getMaxClosingPrice() - 0.2 *obj.getMaxClosingPrice()));
+            }
+        }
+
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+        //GregorianCalendar end = new GregorianCalendar();
+        DataCollector obj = new DataCollector();
+        stocks = obj.getStocks();
+        hDRanges = obj.getHistoricalDataRanges();
+        mARanges = obj.getMovingAverageRanges();
+
+        ObservableList<String> stock = FXCollections.observableArrayList(stocks);
+        ObservableList<Integer> historicalDataRanges = FXCollections.observableArrayList(hDRanges);
+        ObservableList<Integer> movingAverageRanges = FXCollections.observableArrayList(mARanges);
+
+        stockChoice.setItems(stock);
+        stockChoice.setValue(stocks.get(0));
+        historicalDataRangeBox.setItems(historicalDataRanges);
+        historicalDataRangeBox.setValue(hDRanges.get(0));
+        movingAverageRangeBox.setItems(movingAverageRanges);
+        movingAverageRangeBox.setValue(mARanges.get(0));
+
+        try {
+
+            VBox box = FXMLLoader.load(getClass().getResource("SidePanel.fxml"));
+
+            drawer.setSidePane(box);
+            HamburgerBackArrowBasicTransition burger = new HamburgerBackArrowBasicTransition(hamburger);
+            burger.setRate(-1);
+            hamburger.addEventHandler(MouseEvent.MOUSE_PRESSED, (e) -> {
+                burger.setRate(burger.getRate() * -1);
+                burger.play();
+
+                if (drawer.isShown()) {
+                    drawer.close();
+                } else {
+                    drawer.open();
+                }
+            });
+        } catch (IOException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+
+    }
 }
-

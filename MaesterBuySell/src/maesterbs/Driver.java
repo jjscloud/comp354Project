@@ -8,7 +8,7 @@ package maesterbs;
  * Driver asks the user for input to pass information on to the DataCollector, which will calculate the moving average
  * from a stock on Yahoo Finance.
  *
- * For: COMP 354 project (first deliverable), March 15, 2017
+ * For: COMP 354 project (second deliverable), April 12, 2017
  * By: Jennifer Sunahara (27590628), Inna Atanasova (27876947), Krasimir Kanev (27848056), Amirali Shirkhodaei (26255906)
  *     Charles Boudreau (27717679), Jordan Senosiain (26638538), Claudiu Bacisor(27735332)
  **/

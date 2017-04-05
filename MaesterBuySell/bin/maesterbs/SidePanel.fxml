@@ -3,12 +3,11 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="330.0" prefWidth="190.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <JFXButton buttonType="RAISED" prefHeight="66.0" prefWidth="193.0" stylesheets="@SidePanel.css" text="Preferences" />
-      <JFXButton buttonType="RAISED" prefHeight="66.0" prefWidth="199.0" stylesheets="@SidePanel.css" text="Help" />
-      <JFXButton buttonType="RAISED" prefHeight="66.0" prefWidth="206.0" stylesheets="@SidePanel.css" text="FAQ" />
-      <JFXButton buttonType="RAISED" prefHeight="66.0" prefWidth="208.0" stylesheets="@SidePanel.css" text="Account Information" />
-      <JFXButton buttonType="RAISED" prefHeight="66.0" prefWidth="204.0" stylesheets="@SidePanel.css" text="Exit" />
-   </children>
+<VBox fx:id="vbox" style="-fx-background-color: #92a2bf;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="maesterbs.SidePanelController">
+    <children>
+        <JFXButton fx:id="changePwrdBtn" buttonType="RAISED" onAction="#handleChangePwrdBtn" prefHeight="66.0" prefWidth="190.0" stylesheets="@SidePanel.css" text="Change Password" />
+        <JFXButton fx:id="helpBtn" buttonType="RAISED" onAction="#handleHelpBtn" prefHeight="66.0" prefWidth="190.0" style="-fx-background-color: #92a2bf;" stylesheets="@SidePanel.css" text="Help" />
+        <JFXButton fx:id="contactBtn" buttonType="RAISED" onAction="#handleContactBtn" prefHeight="66.0" prefWidth="190.0" stylesheets="@SidePanel.css" text="Contact" />
+      <JFXButton fx:id="reportsBtn" buttonType="RAISED" layoutX="10.0" layoutY="10.0" onAction="#handleReportsBtn" prefHeight="66.0" prefWidth="190.0" stylesheets="@SidePanel.css" text="Reports" />
+    </children>
 </VBox>

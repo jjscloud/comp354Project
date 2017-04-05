@@ -1,6 +1,3 @@
-package maesterbs;
-
-
 /**
  * The class DataCollector is created as part of Maester Buy/Sell, the Share Buy/Sell indicator software application
  * that helps the customers of ProfitsRUS choose a stock from the DOW 30 and get access to advice and charts that help
@@ -15,6 +12,8 @@ package maesterbs;
  *     Charles Boudreau (27717679), Jordan Senosiain (26638538), Claudiu Bacisor(27735332)
  **/
 
+package maesterbs;
+
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -24,6 +23,72 @@ import java.util.Scanner;
 
 public class DataCollector {
 
+    private class DefaultSettings
+    {
+        public ArrayList<String> componentsOfDow;
+        public ArrayList<Integer> hDRanges;
+        public ArrayList<Integer> mARanges;
+
+        public DefaultSettings()
+        {
+            AddDowComponentSymbols();
+            AddHDRanges();
+            AddMARanges();
+        }
+
+        private void AddDowComponentSymbols()
+        {
+            componentsOfDow = new ArrayList<String>();
+
+            componentsOfDow.add("MMM"); // 1
+            componentsOfDow.add("HD"); // 2
+            componentsOfDow.add("JNJ"); // 3
+            componentsOfDow.add("AXP"); // 4
+            componentsOfDow.add("MRK"); // 5
+            componentsOfDow.add("V"); // 6
+            componentsOfDow.add("IBM"); // 7
+            componentsOfDow.add("CSCO"); // 8
+            componentsOfDow.add("DIS"); // 9
+            componentsOfDow.add("AAPL"); // 10
+            componentsOfDow.add("UTX"); // 11
+            componentsOfDow.add("MCD"); // 12
+            componentsOfDow.add("MSFT"); // 13
+            componentsOfDow.add("GE"); // 14
+            componentsOfDow.add("KO"); // 15
+            componentsOfDow.add("CVX"); // 16
+            componentsOfDow.add("PG"); // 17
+            componentsOfDow.add("TRV"); // 18
+            componentsOfDow.add("PFE"); // 19
+            componentsOfDow.add("CAT"); // 20
+            componentsOfDow.add("NKE"); // 21
+            componentsOfDow.add("UNH"); // 22
+            componentsOfDow.add("BA"); // 23
+            componentsOfDow.add("VZ"); // 24
+            componentsOfDow.add("GS"); // 25
+            componentsOfDow.add("WMT"); // 26
+            componentsOfDow.add("INTC"); // 27
+            componentsOfDow.add("JPM"); // 28
+            componentsOfDow.add("DD"); // 29
+            componentsOfDow.add("XOM"); // 30
+        }
+
+        private void AddMARanges()
+        {
+            mARanges = new ArrayList<Integer>();
+            mARanges.add(20);
+            mARanges.add(50);
+            mARanges.add(100);
+            mARanges.add(200);
+        }
+
+        private void  AddHDRanges()
+        {
+            hDRanges = new ArrayList<Integer>();
+            hDRanges.add(1);
+            hDRanges.add(2);
+            hDRanges.add(5);
+        }
+    }
     //Private Inner class StockDataDownloader
     private class StockDataDownloader {
 
@@ -59,7 +124,7 @@ public class DataCollector {
                     "&f="+end.get(Calendar.YEAR)+
                     "&g=d&ignore=.csv";
 
-           try
+            try
             {
                 URL yahooFinance= new URL(urlString);
                 URLConnection data= yahooFinance.openConnection();
@@ -97,12 +162,7 @@ public class DataCollector {
             {
                 System.out.println(e);
             }
-
         }
-
-        //public ArrayList<GregorianCalendar> getDates(){return dates;}
-        //public ArrayList<Double> getCloses(){return closes;}
-        //public ArrayList<Double> getAdjCloses(){return adjcloses;}
 
     }
     // End of StockDataDownloader
@@ -115,6 +175,10 @@ public class DataCollector {
     public ArrayList<Double> shortTermMAs; //short term moving averages
     public ArrayList<Double> longTermMAs; //long term moving averages
     public ArrayList<Indicators> indicators; //indicators: buy, sell or none
+    public ArrayList<String> stockComponentsOfDow;
+    public ArrayList<Integer> historicalDataRanges;
+    public ArrayList<Integer> movingAverageRanges;
+
     public double maxClosingPrice;
     private boolean updatedOnce; // check to make sure that Update method has been called at least once
 
@@ -125,13 +189,27 @@ public class DataCollector {
         shortTermMAs = null;
         longTermMAs = null;
         indicators = null;
+
+        stockComponentsOfDow = null;
+        historicalDataRanges = null;
+        movingAverageRanges = null;
+
         maxClosingPrice = 0;
+
+        DefaultSettings ds = new DefaultSettings();
+        stockComponentsOfDow = ds.componentsOfDow;
+        historicalDataRanges = ds.hDRanges;
+        movingAverageRanges = ds.mARanges;
+
     }
 
     public ArrayList<Double> getClosingPrices(){return closingPrices;}
     public ArrayList<Double> getShortTermMAs(){return shortTermMAs;}
     public ArrayList<Double> getLongTermMAs(){return longTermMAs;}
     public ArrayList<Indicators> getIndicators(){return indicators;}
+    public ArrayList<String> getStocks(){return stockComponentsOfDow;}
+    public ArrayList<Integer> getHistoricalDataRanges(){return historicalDataRanges;}
+    public ArrayList<Integer> getMovingAverageRanges(){return movingAverageRanges;}
     public double getMaxClosingPrice(){return maxClosingPrice;}
 
 
@@ -139,12 +217,7 @@ public class DataCollector {
     {
         //when update is called, clear past data
         closingPrices = new ArrayList<Double>();
-        //shortTermMAs = new ArrayList<Double>();
-        //longTermMAs = new ArrayList<Double>();
         maxClosingPrice = 0;
-
-        //double shortTermMASum = 0;
-        //double longTermMASum = 0;
 
         //access stock information
         StockDataDownloader currentStockData= new StockDataDownloader(symbol, start, end);
@@ -227,8 +300,8 @@ public class DataCollector {
             longTermMAs.trimToSize();
             shortTermMAs.trimToSize();
             // Done calculating the short term MAs and long term MAs
+        }
     }
-}
 
     // internal method to update indicators
     private void UpdateIndicators()
@@ -281,4 +354,3 @@ public class DataCollector {
         indicators.trimToSize();
     }
 }
-
