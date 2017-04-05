@@ -11,7 +11,6 @@
 
 package maesterbs;
 
-
         import java.net.URL;
         import java.util.ResourceBundle;
 
@@ -24,7 +23,6 @@ package maesterbs;
         import javafx.scene.Node;
         import javafx.scene.Parent;
         import javafx.scene.Scene;
-        import javafx.scene.control.Button;
         import javafx.stage.Stage;
 
 public class ChangePasswordController implements Initializable {
@@ -37,7 +35,7 @@ public class ChangePasswordController implements Initializable {
 
         if (event.getSource() == saveBtn) {
             Stage stage = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("ViewMainChart.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("MainChartView.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
@@ -52,4 +50,3 @@ public class ChangePasswordController implements Initializable {
     }
 
 }
-

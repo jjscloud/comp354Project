@@ -14,13 +14,17 @@
          </effect>
          <children>
             <JFXButton fx:id="homeBtn" layoutX="869.0" layoutY="28.0" onAction="#handleHomeBtn" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #92a2bf;" text="Home">
+
                <font>
                   <Font name="Bank Gothic Medium BT" size="20.0" />
+
                </font>
             </JFXButton>
             <JFXTextArea layoutX="23.0" layoutY="102.0" prefHeight="615.0" prefWidth="950.0" text="                                                   Maester Buy/Sell&#10;                                      The Share Buy/Sell indicator tool&#10;&#10;                                              Created for  ProfitsRUS&#10;                                                               by&#10;&#10;&#10;                                         Amirali Shirkhodaei - 26255906  &#10;                                           Charles Boudreau - 27717679&#10;                                             Claudiu Bacisor - 27735332   &#10;                                              Inna Atanasova - 27876947                                  &#10;                                            Jennifer Sunahara - 27590628&#10;                                             Jordan Senosiain - 26638538&#10;                                             Krasimir Kanev - 27848056&#10;&#10;&#10;&#10;">
+
                <font>
                   <Font name="Times New Roman" size="28.0" />
+
                </font>
             </JFXTextArea>
          </children>
