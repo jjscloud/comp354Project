@@ -9,54 +9,54 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #696969;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="maesterbs.LoginPageController">
-   <children>
-      <Pane layoutX="14.0" layoutY="15.0" prefHeight="471.0" prefWidth="673.0" style="-fx-background-color: #696969;">
-         <children>
-            <JFXTextField fx:id="user" focusColor="#92a2bf" layoutX="142.0" layoutY="107.0" prefHeight="58.0" prefWidth="421.0" promptText="User Name" style="f: black;">
-               <font>
-                  <Font name="Bank Gothic Medium BT" size="20.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="TEXT" />
-               </cursor>
-            </JFXTextField>
-            <JFXPasswordField fx:id="password" focusColor="#92a2bf" layoutX="142.0" layoutY="199.0" prefHeight="58.0" prefWidth="421.0" promptText="Password">
-               <font>
-                  <Font name="Bank Gothic Medium BT" size="22.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="TEXT" />
-               </cursor>
-            </JFXPasswordField>
-            <JFXButton fx:id="login" buttonType="RAISED" layoutX="160.0" layoutY="308.0" onAction="#makeLogin" prefHeight="42.0" prefWidth="148.0" ripplerFill="WHITE" style="-fx-background-color: #92a2bf;" text="Login">
-               <font>
-                  <Font name="Bank Gothic Medium BT" size="20.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </JFXButton>
-            <JFXButton fx:id="signup" buttonType="RAISED" layoutX="390.0" layoutY="308.0" onAction="#signUp" prefHeight="42.0" prefWidth="148.0" ripplerFill="WHITE" style="-fx-background-color: #92a2bf;" text="Sign up">
-               <font>
-                  <Font name="Bank Gothic Medium BT" size="20.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </JFXButton>
-            <Label id="failedLogin" fx:id="failedLogin" alignment="CENTER" layoutX="125.0" layoutY="390.0" prefHeight="42.0" prefWidth="421.0" textAlignment="CENTER" textFill="#f20b1e">
-               <font>
-                  <Font name="Bank Gothic Medium BT" size="15.0" />
-               </font>
-            </Label>
-         </children>
-         <effect>
-            <DropShadow blurType="GAUSSIAN" />
-         </effect>
-      </Pane>
-   </children>
-   <effect>
-      <DropShadow />
-   </effect>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #696969;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="maesterbs.LoginController">
+    <children>
+        <Pane layoutX="14.0" layoutY="15.0" prefHeight="471.0" prefWidth="673.0" style="-fx-background-color: #696969;">
+            <children>
+                <JFXTextField fx:id="user" focusColor="#92a2bf" layoutX="142.0" layoutY="107.0" prefHeight="58.0" prefWidth="421.0" promptText="User Name" style="f: black;">
+                    <font>
+                        <Font name="Bank Gothic Medium BT" size="20.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="TEXT" />
+                    </cursor>
+                </JFXTextField>
+                <JFXPasswordField fx:id="password" focusColor="#92a2bf" layoutX="142.0" layoutY="199.0" prefHeight="58.0" prefWidth="421.0" promptText="Password">
+                    <font>
+                        <Font name="Bank Gothic Medium BT" size="22.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="TEXT" />
+                    </cursor>
+                </JFXPasswordField>
+                <JFXButton fx:id="login" buttonType="RAISED" layoutX="160.0" layoutY="308.0" onAction="#makeLogin" prefHeight="42.0" prefWidth="148.0" ripplerFill="WHITE" style="-fx-background-color: #92a2bf;" text="Login">
+                    <font>
+                        <Font name="Bank Gothic Medium BT" size="20.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </JFXButton>
+                <JFXButton fx:id="signup" buttonType="RAISED" layoutX="390.0" layoutY="308.0" onAction="#signUp" prefHeight="42.0" prefWidth="148.0" ripplerFill="WHITE" style="-fx-background-color: #92a2bf;" text="Sign up">
+                    <font>
+                        <Font name="Bank Gothic Medium BT" size="20.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </JFXButton>
+                <Label id="failedLogin" fx:id="failedLogin" alignment="CENTER" layoutX="125.0" layoutY="390.0" prefHeight="42.0" prefWidth="421.0" textAlignment="CENTER" textFill="#f20b1e">
+                    <font>
+                        <Font name="Bank Gothic Medium BT" size="15.0" />
+                    </font>
+                </Label>
+            </children>
+            <effect>
+                <DropShadow blurType="GAUSSIAN" />
+            </effect>
+        </Pane>
+    </children>
+    <effect>
+        <DropShadow />
+    </effect>
 </Pane>
