@@ -7,7 +7,14 @@
  * 				  Also can extract data regardless of number of rows.
  * 				 -Added getReport(). Given a date range, will return total entries and
  *  			  stocks, ma ranges and hd ranges in order of most frequent occurence with %.
- * 
+ *  
+ *  - 2017/04/02 -Changed the name of the table referred (usagedatatest -> appusagedata).
+ *  			 -Added methods to assist in account management: Add a username/password
+ *  			  to a SQL table (also contains user privileges (Admin or User)),
+ *   			  check whether a name already exists within table, and check if a given
+ *                username has Admin priviledges.
+ *  			 
+ *   
  * IMPORTANT: Need to download a JDBC Driver (here: https://dev.mysql.com/downloads/connector/j/5.1.html)
  *            and add it to PATH.
  *            Also, change column/table names in SQL queries to whatever's appropriate.
@@ -15,6 +22,7 @@
 
 import java.sql.*;
 import java.util.ArrayList;
+
 
 public class Logger {
 	
@@ -191,7 +199,7 @@ public class Logger {
 	 * @param ma_range chosen moving average range
 	 * @param hd_range chosen historical data range
 	 */
-	public void logEntry(String user_id, String date, String stock,
+	public void logEntry(String userName, String date, String stock,
 			String ma_range, String hd_range)
 	{
 		// database details, change to whatever will be used
@@ -203,14 +211,130 @@ public class Logger {
 		UserDataConnection newConn = new UserDataConnection(url, user, pass);
 		
 		//SQL string. Change table name and column names to whatever
-		String sql = "INSERT INTO usagedatatest(user_id, entry_date, stock, "
-				+ "ma_range, hd_range) VALUES ( '" + user_id + "', '" + 
+		String sql = "INSERT INTO appusagedata(username, entry_date, stock, "
+				+ "ma_range, hd_range) VALUES ( '" + userName + "', '" + 
 				date + "', '" + stock + "', '" + ma_range + "', '"
 				+ hd_range + "')";
 		
 		
 		newConn.logUserData(sql);
 		
+	}
+	
+	/**
+	 * Checks to see if a username is already in use
+	 * 
+	 * @param userName user name to check
+	 * @return true if already used, false if available
+	 */
+	public boolean userExists(String userName)
+	{
+		// database details, change to whatever will be used
+		String url = "jdbc:mysql://localhost:3306/userdatarepos";
+		String user = "root";
+		String pass = "RelatedT0Database";
+				
+		//
+		UserDataConnection newConn = new UserDataConnection(url, user, pass);
+				
+		
+		String sql = "SELECT username FROM appusers WHERE "
+				+ "username = '" + userName + "'";
+				
+		// get an arraylist of results
+		ArrayList<String> results = newConn.getUserData(sql);
+				
+		// if list is not empty, user already exists.
+		if (results.size() > 0)
+			return true;
+		else
+			return false;
+	}
+	
+	/**
+	 * Add a new user to users table
+	 * 
+	 * @param userName name of new user
+	 * @param passw new user's password
+	 * @param priviledge regular User or Admin?
+	 */
+	public void registerUser(String userName, String passw, String priviledge)
+	{
+		// database details, change to whatever will be used
+		String url = "jdbc:mysql://localhost:3306/userdatarepos";
+		String user = "root";
+		String pass = "RelatedT0Database";
+		
+		//
+		UserDataConnection newConn = new UserDataConnection(url, user, pass);
+		
+		// add user to table
+		String sql = "INSERT INTO appusers(username, pass_word, priviledge) " 
+				+ "VALUES ( '" + userName + "', '" + passw + "', '" 
+				+ priviledge + "')";
+		
+		newConn.logUserData(sql);
+		
+	}
+	
+	/**
+	 * checks to see if a given user and password exist in the table
+	 * 
+	 * @param userName user name to verify
+	 * @param passw user's password
+	 * @return true if valid, false otherwise
+	 */
+	public boolean validateUser(String userName, String passw)
+	{
+		// database details, change to whatever will be used
+		String url = "jdbc:mysql://localhost:3306/userdatarepos";
+		String user = "root";
+		String pass = "RelatedT0Database";
+		
+		//
+		UserDataConnection newConn = new UserDataConnection(url, user, pass);
+		
+		String sql = "SELECT username, pass_word FROM appusers WHERE "
+				+ "username = '" + userName + "' AND pass_word = '" 
+				+ passw + "'";
+		
+		// get an arraylist of results
+		ArrayList<String> results = newConn.getUserData(sql);
+		
+		// if list is not empty, password is valid.
+		if (results.size() > 0)
+			return true;
+		else
+			return false;
+	}
+	
+	/**
+	 * Checks whether given username belongs to an Admin
+	 * 
+	 * @param userName name of user account to check
+	 * @return true if admin, false otherwise.
+	 */
+	public boolean isAdmin(String userName)
+	{
+		// database details, change to whatever will be used
+		String url = "jdbc:mysql://localhost:3306/userdatarepos";
+		String user = "root";
+		String pass = "RelatedT0Database";
+		
+		//
+		UserDataConnection newConn = new UserDataConnection(url, user, pass);
+		
+		String sql = "SELECT username, priviledge FROM appusers WHERE "
+				+ "username = '" + userName + "' AND priviledge = 'Admin'";
+		
+		// get an arraylist of results
+		ArrayList<String> results = newConn.getUserData(sql);
+		
+		// if list is not empty, user has Admin priviledges.
+		if (results.size() > 0)
+			return true;
+		else
+			return false;
 	}
 	
 	public ArrayList<String> getReport(String startDate, String endDate)
@@ -224,7 +348,7 @@ public class Logger {
 		UserDataConnection newConn = new UserDataConnection(url, user, pass);
 		
 		// getting count twice because method is built to handle returning 2 columns for now.
-		String sqlQ = "SELECT COUNT(*) FROM usagedatatest WHERE entry_date "
+		String sqlQ = "SELECT COUNT(*) FROM appusagedata WHERE entry_date "
 				+ "BETWEEN '" + startDate + "' AND '" + endDate + "'";
 		
 		// results go in here
@@ -242,7 +366,7 @@ public class Logger {
 		resultList.add(res1.get(res1.size() - 1));
 		
 		// retrieving most popular stocks, currently works for my own setup
-		sqlQ = "SELECT stock, COUNT(stock) AS total_stock FROM usagedatatest" 
+		sqlQ = "SELECT stock, COUNT(stock) AS total_stock FROM appusagedata" 
 				+ " WHERE entry_date BETWEEN '" + startDate + "' AND '" + 
 				endDate + "' GROUP BY stock ORDER BY total_stock DESC";
 		
@@ -263,7 +387,7 @@ public class Logger {
 		resultList.addAll(res1);
 		
 		// retrieving most popular moving averages
-		sqlQ = "SELECT ma_range, COUNT(ma_range) AS total_ma FROM usagedatatest" 
+		sqlQ = "SELECT ma_range, COUNT(ma_range) AS total_ma FROM appusagedata" 
 				+ " WHERE entry_date BETWEEN '" + startDate + "' AND '" + 
 				endDate + "' GROUP BY ma_range ORDER BY total_ma DESC";
 		
@@ -284,7 +408,7 @@ public class Logger {
 		resultList.addAll(res1);
 		
 		// retrieving most popular historical data ranges
-		sqlQ = "SELECT hd_range, COUNT(hd_range) AS total_hd FROM usagedatatest" 
+		sqlQ = "SELECT hd_range, COUNT(hd_range) AS total_hd FROM appusagedata" 
 				+ " WHERE entry_date BETWEEN '" + startDate + "' AND '" + 
 				endDate + "' GROUP BY hd_range ORDER BY total_hd DESC";
 		
