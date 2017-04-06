@@ -14,6 +14,18 @@
  *   			  check whether a name already exists within table, validate a
  *   			  user given username and password and check if a given
  *                username has Admin priviledges.
+ * 
+ * Connection details:
+ * 				
+ * 	String url = "jdbc:mysql://rds-mysql-10mintutorial.cstajpb503jy.us-east-1.rds.amazonaws.com:3306/testdb";
+ *	String user = "masterUsername";
+ *	String pass = "managerpassword";
+ * 
+ *                
+ * 
+ * Mysql Tables: -appusers (holds user name, password and priviledge level)
+ * 				 -appusagedata (options selected by user when using the system.
+ * 								table has username, entry date, stock symbol, ma range, hd range)
  *  			 
  *   
  * IMPORTANT: Need to download a JDBC Driver (here: https://dev.mysql.com/downloads/connector/j/5.1.html)
@@ -204,9 +216,9 @@ public class Logger {
 			String ma_range, String hd_range)
 	{
 		// database details, change to whatever will be used
-		String url = "jdbc:mysql://localhost:3306/userdatarepos";
-		String user = "root";
-		String pass = "RelatedT0Database";
+		String url = "jdbc:mysql://rds-mysql-10mintutorial.cstajpb503jy.us-east-1.rds.amazonaws.com:3306/testdb";
+		String user = "masterUsername";
+		String pass = "managerpassword";
 		
 		//
 		UserDataConnection newConn = new UserDataConnection(url, user, pass);
