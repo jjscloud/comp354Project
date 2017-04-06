@@ -11,7 +11,8 @@
  *  - 2017/04/02 -Changed the name of the table referred (usagedatatest -> appusagedata).
  *  			 -Added methods to assist in account management: Add a username/password
  *  			  to a SQL table (also contains user privileges (Admin or User)),
- *   			  check whether a name already exists within table, and check if a given
+ *   			  check whether a name already exists within table, validate a
+ *   			  user given username and password and check if a given
  *                username has Admin priviledges.
  *  			 
  *   
@@ -230,9 +231,9 @@ public class Logger {
 	public boolean userExists(String userName)
 	{
 		// database details, change to whatever will be used
-		String url = "jdbc:mysql://localhost:3306/userdatarepos";
-		String user = "root";
-		String pass = "RelatedT0Database";
+		String url = "jdbc:mysql://rds-mysql-10mintutorial.cstajpb503jy.us-east-1.rds.amazonaws.com:3306/testdb";
+		String user = "masterUsername";
+		String pass = "managerpassword";
 				
 		//
 		UserDataConnection newConn = new UserDataConnection(url, user, pass);
@@ -261,15 +262,15 @@ public class Logger {
 	public void registerUser(String userName, String passw, String priviledge)
 	{
 		// database details, change to whatever will be used
-		String url = "jdbc:mysql://localhost:3306/userdatarepos";
-		String user = "root";
-		String pass = "RelatedT0Database";
+		String url = "jdbc:mysql://rds-mysql-10mintutorial.cstajpb503jy.us-east-1.rds.amazonaws.com:3306/testdb";
+		String user = "masterUsername";
+		String pass = "managerpassword";
 		
 		//
 		UserDataConnection newConn = new UserDataConnection(url, user, pass);
 		
 		// add user to table
-		String sql = "INSERT INTO appusers(username, pass_word, priviledge) " 
+		String sql = "INSERT INTO appusers(user_name, pass_word, priviledge) " 
 				+ "VALUES ( '" + userName + "', '" + passw + "', '" 
 				+ priviledge + "')";
 		
@@ -287,15 +288,15 @@ public class Logger {
 	public boolean validateUser(String userName, String passw)
 	{
 		// database details, change to whatever will be used
-		String url = "jdbc:mysql://localhost:3306/userdatarepos";
-		String user = "root";
-		String pass = "RelatedT0Database";
+		String url = "jdbc:mysql://rds-mysql-10mintutorial.cstajpb503jy.us-east-1.rds.amazonaws.com:3306/testdb";
+		String user = "masterUsername";
+		String pass = "managerpassword";
 		
 		//
 		UserDataConnection newConn = new UserDataConnection(url, user, pass);
 		
-		String sql = "SELECT username, pass_word FROM appusers WHERE "
-				+ "username = '" + userName + "' AND pass_word = '" 
+		String sql = "SELECT user_name, pass_word FROM appusers WHERE "
+				+ "user_name = '" + userName + "' AND pass_word = '" 
 				+ passw + "'";
 		
 		// get an arraylist of results
@@ -317,15 +318,15 @@ public class Logger {
 	public boolean isAdmin(String userName)
 	{
 		// database details, change to whatever will be used
-		String url = "jdbc:mysql://localhost:3306/userdatarepos";
-		String user = "root";
-		String pass = "RelatedT0Database";
+		String url = "jdbc:mysql://rds-mysql-10mintutorial.cstajpb503jy.us-east-1.rds.amazonaws.com:3306/testdb";
+		String user = "masterUsername";
+		String pass = "managerpassword";
 		
 		//
 		UserDataConnection newConn = new UserDataConnection(url, user, pass);
 		
-		String sql = "SELECT username, priviledge FROM appusers WHERE "
-				+ "username = '" + userName + "' AND priviledge = 'Admin'";
+		String sql = "SELECT user_name, priviledge FROM appusers WHERE "
+				+ "user_name = '" + userName + "' AND priviledge = 'Admin'";
 		
 		// get an arraylist of results
 		ArrayList<String> results = newConn.getUserData(sql);
@@ -340,9 +341,9 @@ public class Logger {
 	public ArrayList<String> getReport(String startDate, String endDate)
 	{
 		// database details, change to whatever will be used
-		String url = "jdbc:mysql://localhost:3306/userdatarepos";
-		String user = "root";
-		String pass = "RelatedT0Database";
+		String url = "jdbc:mysql://rds-mysql-10mintutorial.cstajpb503jy.us-east-1.rds.amazonaws.com:3306/testdb";
+		String user = "masterUsername";
+		String pass = "managerpassword";
 		
 		//
 		UserDataConnection newConn = new UserDataConnection(url, user, pass);
