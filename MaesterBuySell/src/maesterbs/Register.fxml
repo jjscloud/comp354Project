@@ -21,7 +21,7 @@
                         <Font name="Bank Gothic Medium BT" size="40.0" />
                     </font>
                 </Label>
-                <JFXTextField focusColor="#92a2bf" layoutX="248.0" layoutY="224.0" prefHeight="45.0" prefWidth="500.0" promptText="User Name">
+                <JFXTextField fx:id="newUser" focusColor="#92a2bf" layoutX="248.0" layoutY="224.0" prefHeight="45.0" prefWidth="500.0" promptText="User Name">
                     <font>
                         <Font name="Bank Gothic Medium BT" size="25.0" />
                     </font>
@@ -29,12 +29,12 @@
                         <Cursor fx:constant="TEXT" />
                     </cursor>
                 </JFXTextField>
-                <JFXPasswordField focusColor="#92a2bf" layoutX="248.0" layoutY="406.0" prefHeight="45.0" prefWidth="500.0" promptText="Confirm password">
+                <JFXPasswordField fx:id="newpass" focusColor="#92a2bf" layoutX="248.0" layoutY="406.0" prefHeight="45.0" prefWidth="500.0" promptText="Confirm password">
                     <font>
                         <Font name="Bank Gothic Medium BT" size="25.0" />
                     </font>
                 </JFXPasswordField>
-                <JFXPasswordField focusColor="#92a2bf" layoutX="248.0" layoutY="314.0" prefHeight="45.0" prefWidth="500.0" promptText="Password">
+                <JFXPasswordField fx:id="confirmpass" focusColor="#92a2bf" layoutX="248.0" layoutY="314.0" prefHeight="45.0" prefWidth="500.0" promptText="Password">
                     <font>
                         <Font name="Bank Gothic Medium BT" size="25.0" />
                     </font>
@@ -49,6 +49,7 @@
                         <Font name="Bank Gothic Medium BT" size="25.0" />
                     </font>
                 </JFXButton>
+            <Label id="failedSignup" fx:id="failedSignup" layoutX="245.0" layoutY="636.0" prefHeight="31.0" prefWidth="500.0" textAlignment="CENTER" textFill="#ee0000" />
             </children>
         </Pane>
     </children>

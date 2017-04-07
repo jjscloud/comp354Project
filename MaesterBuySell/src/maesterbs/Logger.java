@@ -33,9 +33,10 @@
  *            Also, change column/table names in SQL queries to whatever's appropriate.
  */
 
+package maesterbs;
+
 import java.sql.*;
 import java.util.ArrayList;
-
 
 public class Logger {
 	
@@ -251,8 +252,8 @@ public class Logger {
 		UserDataConnection newConn = new UserDataConnection(url, user, pass);
 				
 		
-		String sql = "SELECT username FROM appusers WHERE "
-				+ "username = '" + userName + "'";
+		String sql = "SELECT user_name FROM appusers WHERE "
+				+ "user_name = '" + userName + "'";
 				
 		// get an arraylist of results
 		ArrayList<String> results = newConn.getUserData(sql);
@@ -288,6 +289,28 @@ public class Logger {
 		
 		newConn.logUserData(sql);
 		
+	}
+	
+	/**
+	 * given username and a new password. changes a user's password
+	 * 
+	 * @param userName account username
+	 * @param newpass new password
+	 */
+	public void changePassword(String userName, String newpass)
+	{
+		// database details, change to whatever will be used
+		String url = "jdbc:mysql://rds-mysql-10mintutorial.cstajpb503jy.us-east-1.rds.amazonaws.com:3306/testdb";
+		String user = "masterUsername";
+		String pass = "managerpassword";
+		
+		//
+		UserDataConnection newConn = new UserDataConnection(url, user, pass);
+		
+		String sql = "UPDATE appusers SET pass_word = '" + newpass + 
+				"' WHERE user_name = '" + userName + "'";
+		
+		newConn.logUserData(sql);
 	}
 	
 	/**

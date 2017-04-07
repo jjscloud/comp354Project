@@ -2,6 +2,10 @@
  * The class LoginController is created as part of Maester Buy/Sell, the Share Buy/Sell indicator software application
  * that helps the customers of ProfitsRUS choose a stock from the DOW 30 and get access to advice and charts that help
  * visualize whether or not they wish to buy/sell their shares in this stock.
+ * 
+ * Admin Test account credentials:
+ * -user name : testAdmin
+ * -password: adminpass
  *
  *
  * For: COMP 354 project (second deliverable), April 12, 2017
@@ -69,8 +73,21 @@ public class LoginController implements Initializable {
         	String userName = user.getText();
         	String pwrd = password.getText();
         	
-            if (userName.equals("demo") && pwrd.equals("354"))
+        	Logger logger = new Logger();
+        	
+        	//validate username and pass given
+        	boolean valid = logger.validateUser(userName, pwrd);
+        	//check if user is admin
+        	boolean priv = logger.isAdmin(userName);
+        	
+        	CurrentAccount current = new CurrentAccount();
+        	
+        	// if user is admin
+            if (valid && priv)
             {
+            	
+            	current.setCurrentName(userName);
+            	
                 rpt=true;
                 setRpt(rpt);
                 Stage stage = new Stage();
@@ -84,8 +101,10 @@ public class LoginController implements Initializable {
                 stage.show();
                 ((Node)(event.getSource())).getScene().getWindow().hide();
             }
-            else if (userName.equals("demoClient") && pwrd.equals("354"))
+            else if (valid) // if normal user
             {
+            	current.setCurrentName(userName);
+            	
                 rpt=false;
                 setRpt(rpt);
                 Stage stage = new Stage();
