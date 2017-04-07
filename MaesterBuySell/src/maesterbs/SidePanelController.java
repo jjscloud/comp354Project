@@ -69,30 +69,34 @@ public class SidePanelController implements Initializable {
 	void handleHelpBtn(ActionEvent event) throws IOException {
 		if(event.getSource() == helpBtn) {
 
-
 			Stage stage = new Stage();
 			Parent root = FXMLLoader.load(getClass().getResource("Help.fxml"));
 			Scene scene = new Scene(root);
 			stage.setScene(scene);
 			stage.show();
 			((Node) (event.getSource())).getScene().getWindow().hide();
-
-
-
-
-
-
-
-
-
-
-
-
-
 		}
-
 	}
 
+
+	@FXML
+	public void Logout(ActionEvent event) throws IOException
+	{
+		 Stage stage = new Stage();
+         Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+
+
+         Scene scene = new Scene(root);
+         scene.getStylesheets().add(getClass().getResource("MainChartView.css").toExternalForm());
+
+
+
+         stage.setScene(scene);
+         stage.show();
+         ((Node)(event.getSource())).getScene().getWindow().hide();
+	} 
+	
+	
 	@FXML
 	void handleContactBtn(ActionEvent event) throws IOException {
 		if(event.getSource() == contactBtn) {
