@@ -25,11 +25,11 @@ public class DataCollector {
 
     private class DefaultSettings
     {
-        private ArrayList<String> componentsOfDow;
-        private ArrayList<Integer> hDRanges;
-        private ArrayList<Integer> mARanges;
+        public ArrayList<String> componentsOfDow;
+        public ArrayList<String> hDRanges;
+        public ArrayList<Integer> mARanges;
 
-        private DefaultSettings()
+        public DefaultSettings()
         {
             AddDowComponentSymbols();
             AddHDRanges();
@@ -83,22 +83,23 @@ public class DataCollector {
 
         private void  AddHDRanges()
         {
-            hDRanges = new ArrayList<Integer>();
-            hDRanges.add(1);
-            hDRanges.add(2);
-            hDRanges.add(5);
+            hDRanges = new ArrayList<String>();
+            hDRanges.add("1");
+            hDRanges.add("2");
+            hDRanges.add("5");
+            hDRanges.add("All Data");
         }
     }
     //Private Inner class StockDataDownloader
     private class StockDataDownloader {
 
-        private int dateIndex = 0;
-        //private int OPEN=1; // unused, but useful to know
-        //private int HIGH=2; // unused, but useful to know
-        //private int LOW=3; // unused, but useful to know
-        private int closeIndex = 4;
-        //private int VOLUME=5; // unused, but useful to know
-        private int adjcloseIndex = 6;
+        public static final int DATE=0;
+        //public static final int OPEN=1; // unused, but useful to know
+        //public static final int HIGH=2; // unused, but useful to know
+        //public static final int LOW=3; // unused, but useful to know
+        public static final int CLOSE=4;
+        //public static final int VOLUME=5; // unused, but useful to know
+        public static final int ADJCLOSE=6;
 
         private ArrayList<GregorianCalendar> dates;
         private ArrayList<Double> closes;
@@ -145,17 +146,17 @@ public class DataCollector {
                     // need to parse it because we read the lines as string
 
                     //Dates
-                    int dateYear = Integer.parseInt(numbers[dateIndex].substring(0,4));
-                    int dateMonth = Integer.parseInt(numbers[dateIndex].substring(5,7));
-                    int dateDay = Integer.parseInt(numbers[dateIndex].substring(8,10));
+                    int dateYear = Integer.parseInt(numbers[DATE].substring(0,4));
+                    int dateMonth = Integer.parseInt(numbers[DATE].substring(5,7));
+                    int dateDay = Integer.parseInt(numbers[DATE].substring(8,10));
                     GregorianCalendar newDate = new GregorianCalendar(dateYear, dateMonth, dateDay);
                     dates.add(newDate);
 
                     // creating an array list with all the closing prices in it
-                    closes.add(Double.parseDouble(numbers[closeIndex]));
+                    closes.add(Double.parseDouble(numbers[CLOSE]));
 
                     // creating an array list with all the adjusted closing prices in it
-                    adjcloses.add(Double.parseDouble(numbers[adjcloseIndex]));
+                    adjcloses.add(Double.parseDouble(numbers[ADJCLOSE]));
                 }
             }
             catch(Exception e)
@@ -171,18 +172,20 @@ public class DataCollector {
     public enum Indicators{BUY, SELL, NONE}
     public int LONG_TERM_MOVING_AVERAGE_RANGE = 300;
 
-    private ArrayList<Double> closingPrices;
-    private ArrayList<Double> shortTermMAs; //short term moving averages
-    private ArrayList<Double> longTermMAs; //long term moving averages
-    private ArrayList<Indicators> indicators; //indicators: buy, sell or none
-    private ArrayList<String> stockComponentsOfDow;
-    private ArrayList<Integer> historicalDataRanges;
-    private ArrayList<Integer> movingAverageRanges;
+    public ArrayList<Double> closingPrices;
+    public ArrayList<Double> shortTermMAs; //short term moving averages
+    public ArrayList<Double> longTermMAs; //long term moving averages
+    public ArrayList<Indicators> indicators; //indicators: buy, sell or none
+    public ArrayList<String> stockComponentsOfDow;
+    public ArrayList<String> historicalDataRanges;
+    public ArrayList<Integer> movingAverageRanges;
 
-    private double maxClosingPrice;
+    public double maxClosingPrice;
+    private boolean updatedOnce; // check to make sure that Update method has been called at least once
 
     public DataCollector()
     {
+        updatedOnce =  false;
         closingPrices = null;
         shortTermMAs = null;
         longTermMAs = null;
@@ -206,7 +209,7 @@ public class DataCollector {
     public ArrayList<Double> getLongTermMAs(){return longTermMAs;}
     public ArrayList<Indicators> getIndicators(){return indicators;}
     public ArrayList<String> getStocks(){return stockComponentsOfDow;}
-    public ArrayList<Integer> getHistoricalDataRanges(){return historicalDataRanges;}
+    public ArrayList<String> getHistoricalDataRanges(){return historicalDataRanges;}
     public ArrayList<Integer> getMovingAverageRanges(){return movingAverageRanges;}
     public double getMaxClosingPrice(){return maxClosingPrice;}
 
@@ -223,7 +226,7 @@ public class DataCollector {
         currentStockData.adjcloses.trimToSize(); // trimming the array list of closing prices
 
         //updating closingPrices
-        closingPrices = currentStockData.adjcloses;
+        closingPrices = currentStockData.closes;
 
         //updating Short and Long Term Moving Averages
         UpdateMAs(rangeMA);
@@ -231,6 +234,7 @@ public class DataCollector {
         //updating indicators
         UpdateIndicators();
 
+        updatedOnce = true;
     }// end of Update
 
     // internal method to update indicators

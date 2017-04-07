@@ -44,7 +44,7 @@ public class ReportsController implements Initializable {
 
 
     ArrayList<String> stocks;
-    ArrayList<Integer> hDRanges;
+    ArrayList<String> hDRanges;
     ArrayList<Integer> mARanges;
 
     //ObservableList<Integer> historicalRange = FXCollections.observableArrayList(5, 2, 1);
@@ -54,7 +54,7 @@ public class ReportsController implements Initializable {
     private JFXHamburger hamburger;
 
     @FXML
-    private ChoiceBox<Integer> historicalDataRangeBox;
+    private ChoiceBox<String> historicalDataRangeBox;
 
     @FXML
     private ChoiceBox<Integer> movingAverageRangeBox;
@@ -117,7 +117,7 @@ public class ReportsController implements Initializable {
         mARanges = obj.getMovingAverageRanges();
 
         ObservableList<String> stock = FXCollections.observableArrayList(stocks);
-        ObservableList<Integer> historicalDataRanges = FXCollections.observableArrayList(hDRanges);
+        ObservableList<String> historicalDataRanges = FXCollections.observableArrayList(hDRanges);
         ObservableList<Integer> movingAverageRanges = FXCollections.observableArrayList(mARanges);
 
         stockChoice.setItems(stock);
