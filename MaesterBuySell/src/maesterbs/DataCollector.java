@@ -26,7 +26,7 @@ public class DataCollector {
     private class DefaultSettings
     {
         private ArrayList<String> componentsOfDow;
-        private ArrayList<Integer> hDRanges;
+        private ArrayList<String> hDRanges;
         private ArrayList<Integer> mARanges;
 
         private DefaultSettings()
@@ -83,10 +83,11 @@ public class DataCollector {
 
         private void  AddHDRanges()
         {
-            hDRanges = new ArrayList<Integer>();
-            hDRanges.add(1);
-            hDRanges.add(2);
-            hDRanges.add(5);
+            hDRanges = new ArrayList<String>();
+            hDRanges.add("1");
+            hDRanges.add("2");
+            hDRanges.add("5");
+            hDRanges.add("All Data");
         }
     }
     //Private Inner class StockDataDownloader
@@ -175,8 +176,9 @@ public class DataCollector {
     private ArrayList<Double> shortTermMAs; //short term moving averages
     private ArrayList<Double> longTermMAs; //long term moving averages
     private ArrayList<Indicators> indicators; //indicators: buy, sell or none
+    private ArrayList<GregorianCalendar> dates;
     private ArrayList<String> stockComponentsOfDow;
-    private ArrayList<Integer> historicalDataRanges;
+    private ArrayList<String> historicalDataRanges;
     private ArrayList<Integer> movingAverageRanges;
 
     private double maxClosingPrice;
@@ -187,6 +189,7 @@ public class DataCollector {
         shortTermMAs = null;
         longTermMAs = null;
         indicators = null;
+        dates = null;
 
         stockComponentsOfDow = null;
         historicalDataRanges = null;
@@ -205,28 +208,38 @@ public class DataCollector {
     public ArrayList<Double> getShortTermMAs(){return shortTermMAs;}
     public ArrayList<Double> getLongTermMAs(){return longTermMAs;}
     public ArrayList<Indicators> getIndicators(){return indicators;}
+    public ArrayList<GregorianCalendar> getDates(){return dates;}
     public ArrayList<String> getStocks(){return stockComponentsOfDow;}
-    public ArrayList<Integer> getHistoricalDataRanges(){return historicalDataRanges;}
+    public ArrayList<String> getHistoricalDataRanges(){return historicalDataRanges;}
     public ArrayList<Integer> getMovingAverageRanges(){return movingAverageRanges;}
     public double getMaxClosingPrice(){return maxClosingPrice;}
 
 
-    public void UpdateData(String symbol, int rangeMA, GregorianCalendar start, GregorianCalendar end)
+    public void UpdateData(String symbol, int rangeMA, int rangeHD)
     {
         //when update is called, clear past data
         closingPrices = new ArrayList<Double>();
         maxClosingPrice = 0;
 
+        //calculate dates
+        GregorianCalendar today = new GregorianCalendar();
+        GregorianCalendar startDay = calculateStartDate(rangeHD);
+
         //access stock information
-        StockDataDownloader currentStockData= new StockDataDownloader(symbol, start, end);
+        StockDataDownloader currentStockData= new StockDataDownloader(symbol, startDay, today);
 
-        currentStockData.adjcloses.trimToSize(); // trimming the array list of closing prices
+        currentStockData.closes.trimToSize(); // trimming the array list of closing prices
+        currentStockData.dates.trimToSize();
 
-        //updating closingPrices
-        closingPrices = currentStockData.adjcloses;
+        //updating closingPrices and dates
+        closingPrices = currentStockData.closes;
+        dates = currentStockData.dates;
 
         //updating Short and Long Term Moving Averages
         UpdateMAs(rangeMA);
+
+        //trim the closing prices and MAs and dates
+        trimArrays();
 
         //updating indicators
         UpdateIndicators();
@@ -298,6 +311,38 @@ public class DataCollector {
             shortTermMAs.trimToSize();
             // Done calculating the short term MAs and long term MAs
         }
+    }
+
+    //internal method to calculate end date based on hd range
+    private GregorianCalendar calculateStartDate(int historicalDataRange) {
+        GregorianCalendar newDate = new GregorianCalendar();
+
+        if (historicalDataRange == 1000)
+        {
+            newDate.add(newDate.YEAR, -historicalDataRange);
+        }
+        else
+        {
+            newDate.add(newDate.YEAR, -historicalDataRange);
+            newDate.add(newDate.DATE, -300);
+        }
+
+        return newDate;
+    }
+
+    //internal method to trim the closing prices and MAs
+    private void trimArrays()
+    {
+        for (int counter =0; counter<LONG_TERM_MOVING_AVERAGE_RANGE; counter++)
+        {
+            closingPrices.remove(0);
+            shortTermMAs.remove(0);
+            longTermMAs.remove(0);
+        }
+
+        closingPrices.trimToSize();
+        shortTermMAs.trimToSize();
+        longTermMAs.trimToSize();
     }
 
     // internal method to update indicators

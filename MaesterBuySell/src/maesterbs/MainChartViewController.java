@@ -44,14 +44,15 @@ public class MainChartViewController implements Initializable {
     XYChart.Series closingPriceMax;
 
     ArrayList<String> stocks;
-    ArrayList<Integer> hDRanges;
+    ArrayList<String> hDRanges;
     ArrayList<Integer> mARanges;
+    ArrayList<GregorianCalendar> dates;
 
     @FXML
     private JFXHamburger hamburger;
 
     @FXML
-    private ChoiceBox<Integer> historicalDataRangeBox;
+    private ChoiceBox<String> historicalDataRangeBox;
 
     @FXML
     private ChoiceBox<Integer> movingAverageRangeBox;
@@ -80,24 +81,32 @@ public class MainChartViewController implements Initializable {
 
         GregorianCalendar end = new GregorianCalendar();
         DataCollector obj = new DataCollector();
+		
+		int userHDRange = 0;
+        String userChoice = historicalDataRangeBox.getValue();
+        if (userChoice.compareTo("1")==0)
+        {
+        	userHDRange = 1;
+        }else if (userChoice.compareTo("2")==0)
+        {
+        	userHDRange = 2;
+        }else if(userChoice.compareTo("5")==0)
+        {
+        	userHDRange = 5;
+        }
+        else{ userHDRange = 1000;
+        }
 
         obj.UpdateData(stockChoice.getValue(), movingAverageRangeBox.getValue(),
-                calculateStartDate(historicalDataRangeBox.getValue()), end);
+                userHDRange);
 
+        ///////////////////////////////GET DATES/////////////////////////////////////////
         //clear old chart data
         mainChart.getData().clear();
 
         prepareToDrawCharts(obj);
 
         mainChart.getData().addAll(closingPrice, shortTermMA, longTermMA, indicatorsSELL, indicatorsBUY); //actually draw chart
-    }
-
-    private GregorianCalendar calculateStartDate(int HistoricalDataRange) {
-        GregorianCalendar newDate = new GregorianCalendar();
-
-        newDate.add(newDate.YEAR, -HistoricalDataRange);
-
-        return newDate;
     }
 
     private void prepareToDrawCharts(DataCollector obj)
@@ -155,7 +164,7 @@ public class MainChartViewController implements Initializable {
         mARanges = obj.getMovingAverageRanges();
 
         ObservableList<String> stock = FXCollections.observableArrayList(stocks);
-        ObservableList<Integer> historicalDataRanges = FXCollections.observableArrayList(hDRanges);
+        ObservableList<String> historicalDataRanges = FXCollections.observableArrayList(hDRanges);
         ObservableList<Integer> movingAverageRanges = FXCollections.observableArrayList(mARanges);
 
         stockChoice.setItems(stock);
