@@ -13,9 +13,7 @@ package maesterbs;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
@@ -125,30 +123,33 @@ public class MainChartViewController implements Initializable {
 
         for (int counter = 0; counter < obj.getClosingPrices().size(); counter++) {
 
+            String currentDate = obj.getDateStrings().get(counter);
+
+
             if (obj.getClosingPrices().get(counter) == -1) {
             } else {
                 closingPrice.getData()
-                        .add(new XYChart.Data(Integer.toString(counter), obj.getClosingPrices().get(counter)));
+                        .add(new XYChart.Data(currentDate, obj.getClosingPrices().get(counter)));
             }
             if (obj.getLongTermMAs().get(counter) == -1) {
 
             } else {
                 longTermMA.getData()
-                        .add(new XYChart.Data(Integer.toString(counter), obj.getLongTermMAs().get(counter)));
+                        .add(new XYChart.Data(currentDate, obj.getLongTermMAs().get(counter)));
             }
             if (obj.getShortTermMAs().get(counter) == -1) {
 
             } else {
                 shortTermMA.getData()
-                        .add(new XYChart.Data(Integer.toString(counter), obj.getShortTermMAs().get(counter)));
+                        .add(new XYChart.Data(currentDate, obj.getShortTermMAs().get(counter)));
             }
             if(obj.getIndicators().get(counter) == DataCollector.Indicators.SELL)
             {
-                indicatorsSELL.getData().add(new XYChart.Data(Integer.toString(counter), obj.getMaxClosingPrice() - 0.2 *obj.getMaxClosingPrice()));
+                indicatorsSELL.getData().add(new XYChart.Data(currentDate, obj.getLongTermMAs().get(counter)));
             }
             if(obj.getIndicators().get(counter) == DataCollector.Indicators.BUY)
             {
-                indicatorsBUY.getData().add(new XYChart.Data(Integer.toString(counter), obj.getMaxClosingPrice() - 0.2 *obj.getMaxClosingPrice()));
+                indicatorsBUY.getData().add(new XYChart.Data(currentDate, obj.getLongTermMAs().get(counter)));
             }
         }
 

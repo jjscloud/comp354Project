@@ -177,6 +177,7 @@ public class DataCollector {
     private ArrayList<Double> longTermMAs; //long term moving averages
     private ArrayList<Indicators> indicators; //indicators: buy, sell or none
     private ArrayList<GregorianCalendar> dates;
+    private ArrayList<String> dateStrings;
     private ArrayList<String> stockComponentsOfDow;
     private ArrayList<String> historicalDataRanges;
     private ArrayList<Integer> movingAverageRanges;
@@ -190,6 +191,7 @@ public class DataCollector {
         longTermMAs = null;
         indicators = null;
         dates = null;
+        dateStrings = null;
 
         stockComponentsOfDow = null;
         historicalDataRanges = null;
@@ -209,6 +211,7 @@ public class DataCollector {
     public ArrayList<Double> getLongTermMAs(){return longTermMAs;}
     public ArrayList<Indicators> getIndicators(){return indicators;}
     public ArrayList<GregorianCalendar> getDates(){return dates;}
+    public ArrayList<String> getDateStrings(){return dateStrings;}
     public ArrayList<String> getStocks(){return stockComponentsOfDow;}
     public ArrayList<String> getHistoricalDataRanges(){return historicalDataRanges;}
     public ArrayList<Integer> getMovingAverageRanges(){return movingAverageRanges;}
@@ -218,7 +221,6 @@ public class DataCollector {
     public void UpdateData(String symbol, int rangeMA, int rangeHD)
     {
         //when update is called, clear past data
-        closingPrices = new ArrayList<Double>();
         maxClosingPrice = 0;
 
         //calculate dates
@@ -228,12 +230,7 @@ public class DataCollector {
         //access stock information
         StockDataDownloader currentStockData= new StockDataDownloader(symbol, startDay, today);
 
-        currentStockData.closes.trimToSize(); // trimming the array list of closing prices
-        currentStockData.dates.trimToSize();
-
-        //updating closingPrices and dates
-        closingPrices = currentStockData.closes;
-        dates = currentStockData.dates;
+        prepareData(currentStockData);
 
         //updating Short and Long Term Moving Averages
         UpdateMAs(rangeMA);
@@ -241,14 +238,58 @@ public class DataCollector {
         //trim the closing prices and MAs and dates
         trimArrays();
 
+        //formatting Date Strings
+        formatDates();
+
         //updating indicators
         UpdateIndicators();
 
     }// end of Update
 
+    // internal method to reorder, then assign date and current price arrayLists
+    private void prepareData(StockDataDownloader sd)
+    {
+        // clear past data
+        closingPrices = new ArrayList<Double>();
+        dates = new ArrayList<GregorianCalendar>();
+
+        sd.closes.trimToSize(); // trimming the array list of closing prices
+        sd.dates.trimToSize();
+
+        for(int counter = sd.closes.size()-1; counter >= 0; counter--)
+        {
+            closingPrices.add(sd.closes.get(counter));
+            dates.add(sd.dates.get(counter));
+        }
+        //closingPrices =  sd.closes;
+        //dates = sd.dates;
+
+        closingPrices.trimToSize();
+        dates.trimToSize();
+
+    }
+    // internal method to format date strings
+    private void formatDates()
+    {
+        // clear past data
+        dateStrings = new ArrayList<String>();
+
+        dates.trimToSize();
+
+        for(int counter=0; counter < dates.size(); counter++)
+        {
+            String month = dates.get(counter).getTime().toString().substring(4,8);
+            String dayOfMonth = dates.get(counter).getTime().toString().substring(8,10);
+            String year = dates.get(counter).getTime().toString().substring(24);
+            dateStrings.add(month + " " + dayOfMonth + " " + year);
+        }
+
+        dateStrings.trimToSize();
+    }
     // internal method to update indicators
     private void UpdateMAs(int rangeMA)
     {
+        // clear past data
         shortTermMAs = new ArrayList<Double>();
         longTermMAs = new ArrayList<Double>();
         double shortTermMASum = 0;
@@ -315,6 +356,7 @@ public class DataCollector {
 
     //internal method to calculate end date based on hd range
     private GregorianCalendar calculateStartDate(int historicalDataRange) {
+
         GregorianCalendar newDate = new GregorianCalendar();
 
         if (historicalDataRange == 1000)
@@ -336,11 +378,13 @@ public class DataCollector {
         for (int counter =0; counter<LONG_TERM_MOVING_AVERAGE_RANGE; counter++)
         {
             closingPrices.remove(0);
+            dates.remove(0);
             shortTermMAs.remove(0);
             longTermMAs.remove(0);
         }
 
         closingPrices.trimToSize();
+        dates.trimToSize();
         shortTermMAs.trimToSize();
         longTermMAs.trimToSize();
     }
@@ -348,7 +392,9 @@ public class DataCollector {
     // internal method to update indicators
     private void UpdateIndicators()
     {
+        // clear past data
         indicators = new ArrayList<Indicators>();
+
         boolean shortOnTop =false;
 
         //filling the indicator array

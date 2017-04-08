@@ -84,7 +84,7 @@
                         </AnchorPane>
                   <ScatterChart fx:id="mainChart" alternativeRowFillVisible="false" animated="false" horizontalGridLinesVisible="false" horizontalZeroLineVisible="false" layoutX="21.0" layoutY="26.0" legendVisible="true" prefHeight="480.0" prefWidth="998.0" title="Stock" verticalGridLinesVisible="false" verticalZeroLineVisible="false">
                     <xAxis>
-                      <CategoryAxis side="BOTTOM" tickLabelsVisible="false" tickMarkVisible="false" />
+                      <CategoryAxis side="BOTTOM" tickLabelsVisible="true" tickMarkVisible="false" />
                     </xAxis>
                     <yAxis>
                       <NumberAxis side="LEFT" />
