@@ -356,40 +356,35 @@ public class DataCollector {
         {
             for (int counter = 0; counter <  longTermMAs.size(); counter++)
             {
-                if(counter < (LONG_TERM_MOVING_AVERAGE_RANGE-1))
+
+                if (shortTermMAs.get(counter) > longTermMAs.get(counter)) //short term on top
                 {
-                    indicators.add(Indicators.NONE); //while the counter < the long term MA range, it should be all "none"
-                }
-                else // counter >= (LONG_TERM_MOVING_AVERAGE_RANGE-1) --- start comparing at the long term MA range
-                {
-                    if (shortTermMAs.get(counter) > longTermMAs.get(counter)) //short term on top
+                    if (counter != 0 && shortOnTop == false)//if this isn't the first entry and short term was not previously on top
                     {
-                        if (counter != (LONG_TERM_MOVING_AVERAGE_RANGE - 1) && shortOnTop == false)//if this isn't the first entry and short term was not previously on top
+                        indicators.add(Indicators.BUY);
+                    } else //either first entry or short was previously on top
+                    {
+                        indicators.add(Indicators.NONE);
+                    }
+                    shortOnTop = true;
+                } else //either current entries are == or <
+                {
+                    if (shortTermMAs.get(counter) == longTermMAs.get(counter)) //equal
+                    {
+                        indicators.add(Indicators.NONE);
+                    } else // short on bottom
+                    {
+                        if (counter != 0 && shortOnTop == true)//if this isn't the first entry and short term was previously on top
                         {
-                            indicators.add(Indicators.BUY);
-                        } else //either first entry or short was previously on top
+                            indicators.add(Indicators.SELL);
+                        } else //either first entry or short was previously on bottom
                         {
                             indicators.add(Indicators.NONE);
                         }
-                        shortOnTop = true;
-                    } else //either current entries are == or <
-                    {
-                        if (shortTermMAs.get(counter) == longTermMAs.get(counter)) //equal
-                        {
-                            indicators.add(Indicators.NONE);
-                        } else // short on bottom
-                        {
-                            if (counter != (LONG_TERM_MOVING_AVERAGE_RANGE - 1) && shortOnTop == true)//if this isn't the first entry and short term was previously on top
-                            {
-                                indicators.add(Indicators.SELL);
-                            } else //either first entry or short was previously on bottom
-                            {
-                                indicators.add(Indicators.NONE);
-                            }
-                            shortOnTop = false;
-                        }
+                        shortOnTop = false;
                     }
                 }
+
             }
         } //done filling the indicator array
 
