@@ -256,10 +256,11 @@ public class DataCollector {
         sd.closes.trimToSize(); // trimming the array list of closing prices
         sd.dates.trimToSize();
 
-        for(int counter = sd.closes.size()-1; counter >= 0; counter--)
+        for(int counter = 0; counter < sd.closes.size(); counter++)
         {
-            closingPrices.add(sd.closes.get(counter));
-            dates.add(sd.dates.get(counter));
+            int index = sd.closes.size()-counter-1;
+            closingPrices.add(sd.closes.get(index));
+            dates.add(sd.dates.get(index));
         }
         //closingPrices =  sd.closes;
         //dates = sd.dates;
