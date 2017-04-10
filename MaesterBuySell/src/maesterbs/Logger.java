@@ -1,3 +1,4 @@
+
 /**
  * "Logger" class: used to interact with the User Data Repository.
  * Work in progress. Could also use some cleaning/simplifying.
@@ -410,3 +411,4 @@ public class Logger {
 	
 	
 }
+

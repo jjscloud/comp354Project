@@ -16,42 +16,39 @@
                 <DropShadow blurType="GAUSSIAN" />
             </effect>
             <children>
-
-                <Label layoutX="432.0" layoutY="106.0" prefHeight="45.0" prefWidth="238.0" text="REGISTER">
-                    <font>
-                        <Font name="Bank Gothic Medium BT" size="40.0" />
-                    </font>
+                <Label layoutX="432.0" layoutY="106.0" prefHeight="45.0" prefWidth="133.0" text="REGISTER">
+               <font>
+                  <Font size="30.0" />
+               </font>
                 </Label>
-                <JFXTextField fx:id="newUser" focusColor="#92a2bf" layoutX="248.0" layoutY="224.0" prefHeight="45.0" prefWidth="500.0" promptText="User Name">
-                    <font>
-                        <Font size="30.0" />
-                    </font>
+                <JFXTextField focusColor="#92a2bf" layoutX="248.0" layoutY="224.0" prefHeight="45.0" prefWidth="500.0" promptText="User Name">
                     <cursor>
                         <Cursor fx:constant="TEXT" />
                     </cursor>
+               <font>
+                  <Font size="22.0" />
+               </font>
                 </JFXTextField>
-                <JFXPasswordField fx:id="newpass" focusColor="#92a2bf" layoutX="248.0" layoutY="406.0" prefHeight="45.0" prefWidth="500.0" promptText="Confirm password">
-                    <font>
-                        <Font size="22.0" />
-                    </font>
+                <JFXPasswordField focusColor="#92a2bf" layoutX="248.0" layoutY="406.0" prefHeight="45.0" prefWidth="500.0" promptText="Confirm password">
+               <font>
+                  <Font size="22.0" />
+               </font>
                 </JFXPasswordField>
-                <JFXPasswordField fx:id="confirmpass" focusColor="#92a2bf" layoutX="248.0" layoutY="314.0" prefHeight="45.0" prefWidth="500.0" promptText="Password">
-                    <font>
-                        <Font size="22.0" />
-                    </font>
+                <JFXPasswordField focusColor="#92a2bf" layoutX="248.0" layoutY="314.0" prefHeight="45.0" prefWidth="500.0" promptText="Password">
+               <font>
+                  <Font size="22.0" />
+               </font>
                 </JFXPasswordField>
                 <JFXButton fx:id="registerBtn" layoutX="248.0" layoutY="540.0" onAction="#handleRegisterBtn" prefHeight="54.0" prefWidth="175.0" style="-fx-background-color: #92a2bf;" text="Register">
-                    <font>
-                        <Font size="22.0" />
-                    </font>
+               <font>
+                  <Font size="20.0" />
+               </font>
                 </JFXButton>
                 <JFXButton fx:id="cancelBtn" layoutX="573.0" layoutY="540.0" onAction="#handleCancelBtn" prefHeight="54.0" prefWidth="175.0" style="-fx-background-color: #92a2bf;" text="Cancel">
-                    <font>
-                        <Font size="22.0" />
-                    </font>
+               <font>
+                  <Font size="20.0" />
+               </font>
                 </JFXButton>
-            <Label id="failedSignup" fx:id="failedSignup" layoutX="245.0" layoutY="636.0" prefHeight="31.0" prefWidth="500.0" textAlignment="CENTER" textFill="#ee0000" />
-
             </children>
         </Pane>
     </children>

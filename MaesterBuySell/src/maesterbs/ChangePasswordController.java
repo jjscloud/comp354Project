@@ -1,3 +1,4 @@
+
 /**
  * The class ChangePasswordController is created as part of Maester Buy/Sell, the Share Buy/Sell indicator software application
  * that helps the customers of ProfitsRUS choose a stock from the DOW 30 and get access to advice and charts that help
@@ -31,6 +32,9 @@ public class ChangePasswordController implements Initializable {
 
     @FXML
     private JFXButton saveBtn;
+  
+    @FXML
+    private JFXButton cancelBtn;
 
     @FXML
     private Label failedChange;
@@ -79,10 +83,25 @@ public class ChangePasswordController implements Initializable {
         	}
         }
     }
+  
+    @FXML
+    private void handleCancelBtn(ActionEvent event) throws Exception {
+
+        if (event.getSource() == cancelBtn) {
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("MainChartView.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+            ((Node) (event.getSource())).getScene().getWindow().hide();
+
+        }
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
+
 
 }

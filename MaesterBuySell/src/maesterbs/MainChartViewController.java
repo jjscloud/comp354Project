@@ -1,3 +1,4 @@
+
 /**
  * The class MainChartViewController is created as part of Maester Buy/Sell, the Share Buy/Sell indicator software application
  * that helps the customers of ProfitsRUS choose a stock from the DOW 30 and get access to advice and charts that help
@@ -13,11 +14,7 @@ package maesterbs;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
-import java.util.ResourceBundle;
-import java.util.Date;
-import java.text.SimpleDateFormat;
+import java.util.*;
 
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
@@ -108,12 +105,11 @@ public class MainChartViewController implements Initializable {
         String userStock = stockChoice.getValue();
         int userMA = movingAverageRangeBox.getValue();
         
-		Date date = new Date();
-		String currentdate = new SimpleDateFormat("yyyy-MM-dd").format(date);
+		    Date date = new Date();
+		    String currentdate = new SimpleDateFormat("yyyy-MM-dd").format(date);
         
         logger.logEntry(current.getCurrentName(), currentdate, userStock, 
         		Integer.toString(userMA), Integer.toString(userHDRange));
-        
         ///////////////////////////////GET DATES/////////////////////////////////////////
         //clear old chart data
         mainChart.getData().clear();
@@ -139,30 +135,33 @@ public class MainChartViewController implements Initializable {
 
         for (int counter = 0; counter < obj.getClosingPrices().size(); counter++) {
 
+            String currentDate = obj.getDateStrings().get(counter);
+
+
             if (obj.getClosingPrices().get(counter) == -1) {
             } else {
                 closingPrice.getData()
-                        .add(new XYChart.Data(Integer.toString(counter), obj.getClosingPrices().get(counter)));
+                        .add(new XYChart.Data(currentDate, obj.getClosingPrices().get(counter)));
             }
             if (obj.getLongTermMAs().get(counter) == -1) {
 
             } else {
                 longTermMA.getData()
-                        .add(new XYChart.Data(Integer.toString(counter), obj.getLongTermMAs().get(counter)));
+                        .add(new XYChart.Data(currentDate, obj.getLongTermMAs().get(counter)));
             }
             if (obj.getShortTermMAs().get(counter) == -1) {
 
             } else {
                 shortTermMA.getData()
-                        .add(new XYChart.Data(Integer.toString(counter), obj.getShortTermMAs().get(counter)));
+                        .add(new XYChart.Data(currentDate, obj.getShortTermMAs().get(counter)));
             }
             if(obj.getIndicators().get(counter) == DataCollector.Indicators.SELL)
             {
-                indicatorsSELL.getData().add(new XYChart.Data(Integer.toString(counter), obj.getMaxClosingPrice() - 0.2 *obj.getMaxClosingPrice()));
+                indicatorsSELL.getData().add(new XYChart.Data(currentDate, obj.getLongTermMAs().get(counter)));
             }
             if(obj.getIndicators().get(counter) == DataCollector.Indicators.BUY)
             {
-                indicatorsBUY.getData().add(new XYChart.Data(Integer.toString(counter), obj.getMaxClosingPrice() - 0.2 *obj.getMaxClosingPrice()));
+                indicatorsBUY.getData().add(new XYChart.Data(currentDate, obj.getLongTermMAs().get(counter)));
             }
         }
 
@@ -211,4 +210,5 @@ public class MainChartViewController implements Initializable {
         }
 
     }
+
 }
