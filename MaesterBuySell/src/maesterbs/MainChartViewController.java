@@ -15,6 +15,7 @@ package maesterbs;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
+import java.text.SimpleDateFormat;
 
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
@@ -109,7 +110,7 @@ public class MainChartViewController implements Initializable {
 		    String currentdate = new SimpleDateFormat("yyyy-MM-dd").format(date);
         
         logger.logEntry(current.getCurrentName(), currentdate, userStock, 
-        		Integer.toString(userMA), Integer.toString(userHDRange));
+        		Integer.toString(userMA), userChoice);
         ///////////////////////////////GET DATES/////////////////////////////////////////
         //clear old chart data
         mainChart.getData().clear();
