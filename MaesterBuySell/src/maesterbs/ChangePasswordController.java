@@ -29,11 +29,28 @@ public class ChangePasswordController implements Initializable {
 
     @FXML
     private JFXButton saveBtn;
+    
+    @FXML
+    private JFXButton cancelBtn;
 
     @FXML
     private void handleSaveBtn(ActionEvent event) throws Exception {
 
         if (event.getSource() == saveBtn) {
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("MainChartView.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+            ((Node) (event.getSource())).getScene().getWindow().hide();
+
+        }
+    }
+    
+    @FXML
+    private void handleCancelBtn(ActionEvent event) throws Exception {
+
+        if (event.getSource() == cancelBtn) {
             Stage stage = new Stage();
             Parent root = FXMLLoader.load(getClass().getResource("MainChartView.fxml"));
             Scene scene = new Scene(root);
