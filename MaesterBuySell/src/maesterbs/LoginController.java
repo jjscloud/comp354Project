@@ -95,8 +95,7 @@ public class LoginController implements Initializable {
 
                 Scene scene = new Scene(root);
                 scene.getStylesheets().add(getClass().getResource("MainChartView.css").toExternalForm());
-
-
+		    
                 stage.setScene(scene);
                 stage.show();
                 ((Node)(event.getSource())).getScene().getWindow().hide();
@@ -110,6 +109,8 @@ public class LoginController implements Initializable {
                 Stage stage = new Stage();
                 Parent root = FXMLLoader.load(getClass().getResource("MainChartView.fxml"));
                 Scene scene = new Scene(root);
+		scene.getStylesheets().add(getClass().getResource("MainChartView.css").toExternalForm());    
+		    
                 stage.setScene(scene);
                 stage.show();
                 ((Node) (event.getSource())).getScene().getWindow().hide();
