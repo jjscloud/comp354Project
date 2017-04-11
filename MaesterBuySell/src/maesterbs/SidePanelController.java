@@ -87,7 +87,7 @@ public class SidePanelController implements Initializable {
 
 
          Scene scene = new Scene(root);
-         scene.getStylesheets().add(getClass().getResource("MainChartView.css").toExternalForm());
+         //scene.getStylesheets().add(getClass().getResource("MainChartView.css").toExternalForm());
 
 
 
