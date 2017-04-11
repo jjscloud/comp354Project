@@ -1,3 +1,4 @@
+
 /**
  * The class MainChartViewController is created as part of Maester Buy/Sell, the Share Buy/Sell indicator software application
  * that helps the customers of ProfitsRUS choose a stock from the DOW 30 and get access to advice and charts that help
@@ -14,6 +15,7 @@ package maesterbs;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
+import java.text.SimpleDateFormat;
 
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
@@ -98,6 +100,17 @@ public class MainChartViewController implements Initializable {
         obj.UpdateData(stockChoice.getValue(), movingAverageRangeBox.getValue(),
                 userHDRange);
 
+        Logger logger = new Logger();
+        CurrentAccount current = new CurrentAccount();
+        
+        String userStock = stockChoice.getValue();
+        int userMA = movingAverageRangeBox.getValue();
+        
+		    Date date = new Date();
+		    String currentdate = new SimpleDateFormat("yyyy-MM-dd").format(date);
+        
+        logger.logEntry(current.getCurrentName(), currentdate, userStock, 
+        		Integer.toString(userMA), userChoice);
         ///////////////////////////////GET DATES/////////////////////////////////////////
         //clear old chart data
         mainChart.getData().clear();
@@ -198,4 +211,5 @@ public class MainChartViewController implements Initializable {
         }
 
     }
+
 }

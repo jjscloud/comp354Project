@@ -1,4 +1,4 @@
-package maesterbs;
+
 /**
  * "Logger" class: used to interact with the User Data Repository.
  * Work in progress. Could also use some cleaning/simplifying.
@@ -34,9 +34,10 @@ package maesterbs;
  *            Also, change column/table names in SQL queries to whatever's appropriate.
  */
 
+package maesterbs;
+
 import java.sql.*;
 import java.util.ArrayList;
-
 
 public class Logger {
 	
@@ -252,8 +253,8 @@ public class Logger {
 		UserDataConnection newConn = new UserDataConnection(url, user, pass);
 				
 		
-		String sql = "SELECT username FROM appusers WHERE "
-				+ "username = '" + userName + "'";
+		String sql = "SELECT user_name FROM appusers WHERE "
+				+ "user_name = '" + userName + "'";
 				
 		// get an arraylist of results
 		ArrayList<String> results = newConn.getUserData(sql);
@@ -289,6 +290,28 @@ public class Logger {
 		
 		newConn.logUserData(sql);
 		
+	}
+	
+	/**
+	 * given username and a new password. changes a user's password
+	 * 
+	 * @param userName account username
+	 * @param newpass new password
+	 */
+	public void changePassword(String userName, String newpass)
+	{
+		// database details, change to whatever will be used
+		String url = "jdbc:mysql://rds-mysql-10mintutorial.cstajpb503jy.us-east-1.rds.amazonaws.com:3306/testdb";
+		String user = "masterUsername";
+		String pass = "managerpassword";
+		
+		//
+		UserDataConnection newConn = new UserDataConnection(url, user, pass);
+		
+		String sql = "UPDATE appusers SET pass_word = '" + newpass + 
+				"' WHERE user_name = '" + userName + "'";
+		
+		newConn.logUserData(sql);
 	}
 	
 	/**
@@ -351,7 +374,17 @@ public class Logger {
 			return false;
 	}
 	
-	public ArrayList<String> getReport(String startDate, String endDate)
+	/**
+	 * Returns as array list all entries that match inputs in given fields
+	 * '%' is used as a wildcard
+	 * 
+	 * @param userName user name to search for
+	 * @param stock stock to search for
+	 * @param ma_range moving average range to search for
+	 * @param hd_range historical data range to search for
+	 * @return ArrayList containing requested data, divide length by 5 to find number of rows.
+	 */
+	public ArrayList<String> getReport(String userName, String stock, String ma_range, String hd_range)
 	{
 		// database details, change to whatever will be used
 		String url = "jdbc:mysql://rds-mysql-10mintutorial.cstajpb503jy.us-east-1.rds.amazonaws.com:3306/testdb";
@@ -362,89 +395,20 @@ public class Logger {
 		UserDataConnection newConn = new UserDataConnection(url, user, pass);
 		
 		// getting count twice because method is built to handle returning 2 columns for now.
-		String sqlQ = "SELECT COUNT(*) FROM appusagedata WHERE entry_date "
-				+ "BETWEEN '" + startDate + "' AND '" + endDate + "'";
-		
-		// results go in here
-		ArrayList<String> resultList = new ArrayList<String>();
+		String sqlQ = "SELECT username, entry_date, stock, ma_range, hd_range FROM appusagedata"
+				+ " WHERE username LIKE '" + userName + "' AND stock LIKE '" + stock +
+				"' AND ma_range LIKE '" + ma_range + "' AND hd_range LIKE '" + hd_range +
+				"'";
 		
 		// first set of results: number of entries
 		ArrayList<String> res1;
 		
 		res1 = newConn.getUserData(sqlQ);
 		
-		// save total entries as int for later
-		int totalEnt = Integer.parseInt(res1.get(res1.size() - 1));
-		
-		resultList.add("Total Entries: ");
-		resultList.add(res1.get(res1.size() - 1));
-		
-		// retrieving most popular stocks, currently works for my own setup
-		sqlQ = "SELECT stock, COUNT(stock) AS total_stock FROM appusagedata" 
-				+ " WHERE entry_date BETWEEN '" + startDate + "' AND '" + 
-				endDate + "' GROUP BY stock ORDER BY total_stock DESC";
-		
-		res1 = newConn.getUserData(sqlQ);
-		
-		// change count to percentage
-		for (int i = 1; i < res1.size(); i = i + 2)
-		{
-			double temp1 = Double.parseDouble(res1.get(i));
-			
-			temp1 = temp1 / totalEnt;
-			
-			res1.set(i, Double.toString(temp1));
-		}
-		
-		// add to results list
-		resultList.add("Stocks: ");
-		resultList.addAll(res1);
-		
-		// retrieving most popular moving averages
-		sqlQ = "SELECT ma_range, COUNT(ma_range) AS total_ma FROM appusagedata" 
-				+ " WHERE entry_date BETWEEN '" + startDate + "' AND '" + 
-				endDate + "' GROUP BY ma_range ORDER BY total_ma DESC";
-		
-		res1 = newConn.getUserData(sqlQ);
-		
-		// change count to percentage
-		for (int i = 1; i < res1.size(); i = i + 2)
-		{
-			double temp1 = Double.parseDouble(res1.get(i));
-			
-			temp1 = temp1 / totalEnt;
-			
-			res1.set(i, Double.toString(temp1));
-		}
-		
-		// add to result list
-		resultList.add("Moving Average ranges:");
-		resultList.addAll(res1);
-		
-		// retrieving most popular historical data ranges
-		sqlQ = "SELECT hd_range, COUNT(hd_range) AS total_hd FROM appusagedata" 
-				+ " WHERE entry_date BETWEEN '" + startDate + "' AND '" + 
-				endDate + "' GROUP BY hd_range ORDER BY total_hd DESC";
-		
-		res1 = newConn.getUserData(sqlQ);
-		
-		// change count to percentage
-		for (int i = 1; i < res1.size(); i = i + 2)
-		{
-			double temp1 = Double.parseDouble(res1.get(i));
-			
-			temp1 = temp1 / totalEnt;
-			
-			res1.set(i, Double.toString(temp1));
-		}
-		
-		// add to result list
-		resultList.add("Historical Data ranges:");
-		resultList.addAll(res1);
-		
-		// return list of results
-		return resultList;
+		return res1;
+
 	}
 	
 	
 }
+

@@ -10,6 +10,10 @@
  **/
 package maesterbs;
 
+import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXPasswordField;
+
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -21,6 +25,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import javafx.scene.control.Label;
 
 public class RegisterController implements Initializable {
 
@@ -29,17 +34,53 @@ public class RegisterController implements Initializable {
 
     @FXML
     private Button cancelBtn;
+    
+    @FXML
+    private JFXTextField newUser;
+    
+    @FXML
+    private JFXPasswordField newpass;
+    
+    @FXML
+    private JFXPasswordField confirmpass;
+    
+    @FXML
+    private Label failedSignup;
 
     @FXML
     private void handleRegisterBtn(ActionEvent event) throws Exception {
 
         if (event.getSource() == registerBtn) {
-            Stage stage = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("MainChartView.fxml"));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-            ((Node) (event.getSource())).getScene().getWindow().hide();
+        	// take new user name and pass
+        	String userName = newUser.getText();
+        	
+        	String passw = newpass.getText();
+        	
+        	String passcon = confirmpass.getText();
+        	// logger class
+        	Logger logger = new Logger();
+        	
+        	if (logger.userExists(userName))
+        	{
+        		failedSignup.setText("Username not available. Please choose another.");
+        	}
+        	else if (!passw.equals(passcon))
+        	{
+        		failedSignup.setText("Please make sure passwords match.");
+        	}
+        	else
+        	{
+        		//register new name and password to db
+        		logger.registerUser(userName, passw, "User");
+        	
+        		//return to login
+        		Stage stage = new Stage();
+        		Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+        		Scene scene = new Scene(root);
+        		stage.setScene(scene);
+        		stage.show();
+        		((Node) (event.getSource())).getScene().getWindow().hide();
+        	}
 
         }
     }
