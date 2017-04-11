@@ -175,6 +175,13 @@ public class ReportsController implements Initializable {
     			//set table data
     			tableReport.setItems(data);
     		}
+		else
+    		{
+    			data = FXCollections.observableArrayList();
+    			
+    			//set table data
+    			tableReport.setItems(data);
+    		}
     		
     	}
     }
