@@ -60,7 +60,7 @@
                      </children>
                   </Pane>
 
-                          <Button fx:id="searchBtn" layoutX="27.0" layoutY="123.0" maxHeight="44.0" maxWidth="190.0" minHeight="35.0" minWidth="190.0" mnemonicParsing="false" onAction="#handleSearchBtn" prefHeight="44.0" prefWidth="190.0" style="-fx-background-color: #92a2bf;" text="Search">
+                          <Button fx:id="searchBtn" layoutX="27.0" layoutY="123.0" maxHeight="44.0" maxWidth="190.0" minHeight="35.0" minWidth="190.0" mnemonicParsing="false" onAction="#handleSearchBtn" prefHeight="44.0" prefWidth="190.0" style="-fx-background-color: #92a2bf;" text="Generate Report">
                               <font>
                                   <Font size="20.0" />
                               </font>

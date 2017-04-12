@@ -23,6 +23,8 @@ import java.util.Scanner;
 
 public class DataCollector {
 
+    // private inner class DefaultSettings to set default setting such as Stock choices,
+    // Moving Average Ranges and Historical Data Ranges
     private class DefaultSettings
     {
         private ArrayList<String> componentsOfDow;
@@ -90,7 +92,7 @@ public class DataCollector {
             hDRanges.add("All Data");
         }
     }
-    //Private Inner class StockDataDownloader
+    //Private Inner class StockDataDownloader to actually retrieve the stock data from Yahoo Finance
     private class StockDataDownloader {
 
         private int dateIndex = 0;
@@ -169,6 +171,7 @@ public class DataCollector {
     // End of StockDataDownloader
 
 
+    // attributes of DataCollector
     public enum Indicators{BUY, SELL, NONE}
     public int LONG_TERM_MOVING_AVERAGE_RANGE = 300;
 
@@ -177,7 +180,7 @@ public class DataCollector {
     private ArrayList<Double> longTermMAs; //long term moving averages
     private ArrayList<Indicators> indicators; //indicators: buy, sell or none
     private ArrayList<GregorianCalendar> dates;
-    private ArrayList<String> dateStrings;
+    private ArrayList<String> dateStrings;// dates in string form, date strings with MMM DD YYYY format
     private ArrayList<String> stockComponentsOfDow;
     private ArrayList<String> historicalDataRanges;
     private ArrayList<Integer> movingAverageRanges;
@@ -230,6 +233,7 @@ public class DataCollector {
         //access stock information
         StockDataDownloader currentStockData= new StockDataDownloader(symbol, startDay, today);
 
+        //reordering the arrays so that the most recent data is last
         prepareData(currentStockData);
 
         //updating Short and Long Term Moving Averages
@@ -246,7 +250,8 @@ public class DataCollector {
 
     }// end of Update
 
-    // internal method to reorder, then assign date and current price arrayLists
+    // internal method to reorder the arrays so that the most recent data is last,
+    // then assign date and current price arrayLists
     private void prepareData(StockDataDownloader sd)
     {
         // clear past data
@@ -256,20 +261,21 @@ public class DataCollector {
         sd.closes.trimToSize(); // trimming the array list of closing prices
         sd.dates.trimToSize();
 
+        // ARTIFACT BUG: For some reason, the following loop is related to the artifact problem
         for(int counter = 0; counter < sd.closes.size(); counter++)
         {
             int index = sd.closes.size()-counter-1;
             closingPrices.add(sd.closes.get(index));
             dates.add(sd.dates.get(index));
         }
-        //closingPrices =  sd.closes;
-        //dates = sd.dates;
+        //closingPrices =  sd.closes; //line for ARTIFACT BUG test purposes
+        //dates = sd.dates; //line for ARTIFACT BUG test purposes
 
         closingPrices.trimToSize();
         dates.trimToSize();
 
     }
-    // internal method to format date strings
+    // internal method to format date strings with MMM DD YYYY format
     private void formatDates()
     {
         // clear past data
@@ -360,14 +366,14 @@ public class DataCollector {
 
         GregorianCalendar newDate = new GregorianCalendar();
 
-        if (historicalDataRange == 1000)
+        if (historicalDataRange == 1000) // all data option
         {
-            newDate.add(newDate.YEAR, -historicalDataRange);
+            newDate.add(newDate.YEAR, -historicalDataRange); // add -1000 years
         }
         else
         {
-            newDate.add(newDate.YEAR, -historicalDataRange);
-            newDate.add(newDate.DATE, -300);
+            newDate.add(newDate.YEAR, -historicalDataRange); // add -1, -2 or -5 years
+            newDate.add(newDate.DATE, -300);// add -300 days
         }
 
         return newDate;
