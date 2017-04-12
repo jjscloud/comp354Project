@@ -76,8 +76,11 @@ public class ChangePasswordController implements Initializable {
         		
         		Stage stage = new Stage();
         		Parent root = FXMLLoader.load(getClass().getResource("MainChartView.fxml"));
+
         		Scene scene = new Scene(root);
-        		stage.setScene(scene);
+                scene.getStylesheets().add(getClass().getResource("MainChartView.css").toExternalForm());
+
+                stage.setScene(scene);
         		stage.show();
         		((Node) (event.getSource())).getScene().getWindow().hide();
         	}
@@ -91,6 +94,8 @@ public class ChangePasswordController implements Initializable {
             Stage stage = new Stage();
             Parent root = FXMLLoader.load(getClass().getResource("MainChartView.fxml"));
             Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("MainChartView.css").toExternalForm());
+
             stage.setScene(scene);
             stage.show();
             ((Node) (event.getSource())).getScene().getWindow().hide();

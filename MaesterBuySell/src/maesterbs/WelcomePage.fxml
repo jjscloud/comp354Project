@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane fx:id="root" prefHeight="512.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="maesterbs.WelcomePageController">
+   <children>
+      <Pane fx:id="first" layoutX="200.0" layoutY="1.0" prefHeight="350.0" prefWidth="350.0">
+         <children>
+            <ImageView fitHeight="350.0" fitWidth="350.0">
+               <image>
+                  <Image url="@../Images/First.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane fx:id="second" layoutX="200.0" layoutY="1.0" prefHeight="350.0" prefWidth="350.0">
+         <children>
+            <ImageView fitHeight="353.0" fitWidth="353.0" layoutY="-1.0" x="-1.0" y="-1.0">
+               <image>
+                  <Image url="@../Images/Second.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane fx:id="third" layoutX="200.0" layoutY="1.0" prefHeight="350.0" prefWidth="350.0">
+         <children>
+            <ImageView fitHeight="350.0" fitWidth="350.0">
+               <image>
+                  <Image url="@../Images/Third.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane fx:id="fourth" layoutX="200.0" layoutY="1.0" prefHeight="350.0" prefWidth="350.0">
+         <children>
+            <ImageView fitHeight="350.0" fitWidth="350.0" layoutX="1.0" layoutY="2.0">
+               <image>
+                  <Image url="@../Images/4.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane fx:id="fifth" layoutX="200.0" layoutY="1.0" prefHeight="350.0" prefWidth="350.0">
+         <children>
+            <ImageView fitHeight="350.0" fitWidth="350.0">
+               <image>
+                  <Image url="@../Images/Fifth.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane fx:id="sixth" layoutY="361.0">
+         <children>
+            <ImageView fitHeight="77.0" fitWidth="780.0">
+               <image>
+                  <Image url="@../Images/TEXT.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

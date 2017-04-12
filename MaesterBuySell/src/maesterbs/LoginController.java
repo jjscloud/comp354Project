@@ -17,6 +17,7 @@
 package maesterbs;
 
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -32,6 +33,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
 /**
@@ -70,55 +72,7 @@ public class LoginController implements Initializable {
     private void makeLogin(ActionEvent event) throws Exception{
                
         if(event.getSource() == login) {
-        	String userName = user.getText();
-        	String pwrd = password.getText();
-        	
-        	Logger logger = new Logger();
-        	
-        	//validate username and pass given
-        	boolean valid = logger.validateUser(userName, pwrd);
-        	//check if user is admin
-        	boolean priv = logger.isAdmin(userName);
-        	
-        	CurrentAccount current = new CurrentAccount();
-        	
-        	// if user is admin
-            if (valid && priv)
-            {
-            	
-            	current.setCurrentName(userName);
-            	
-                rpt=true;
-                setRpt(rpt);
-                Stage stage = new Stage();
-                Parent root = FXMLLoader.load(getClass().getResource("MainChartView.fxml"));
-
-                Scene scene = new Scene(root);
-                scene.getStylesheets().add(getClass().getResource("MainChartView.css").toExternalForm());
-		    
-                stage.setScene(scene);
-                stage.show();
-                ((Node)(event.getSource())).getScene().getWindow().hide();
-            }
-            else if (valid) // if normal user
-            {
-            	current.setCurrentName(userName);
-            	
-                rpt=false;
-                setRpt(rpt);
-                Stage stage = new Stage();
-                Parent root = FXMLLoader.load(getClass().getResource("MainChartView.fxml"));
-                Scene scene = new Scene(root);
-		scene.getStylesheets().add(getClass().getResource("MainChartView.css").toExternalForm());    
-		    
-                stage.setScene(scene);
-                stage.show();
-                ((Node) (event.getSource())).getScene().getWindow().hide();
-            }
-        	else {
-        		 failedLogin.setText("Username or Password invalid!");
-        	}
-        	       	
+        	verify();
         }
         
     }
@@ -135,11 +89,85 @@ public class LoginController implements Initializable {
     	
     }
     	
+    public void verify() throws IOException{
+    	String userName = user.getText();
+    	String pwrd = password.getText();
+    	
+    	Logger logger = new Logger();
+    	
+    	//validate username and pass given
+    	boolean valid = logger.validateUser(userName, pwrd);
+    	//check if user is admin
+    	boolean priv = logger.isAdmin(userName);
+    	
+    	CurrentAccount current = new CurrentAccount();
+    	
+    	// if user is admin
+        if (valid && priv)
+        {
+        	
+        	current.setCurrentName(userName);
+        	
+            rpt=true;
+            setRpt(rpt);
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("MainChartView.fxml"));
+
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("MainChartView.css").toExternalForm());
+	    
+            stage.setScene(scene);
+            stage.show();
+            login.getScene().getWindow().hide();
+        }
+        else if (valid) // if normal user
+        {
+        	current.setCurrentName(userName);
+        	
+            rpt=false;
+            setRpt(rpt);
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("MainChartView.fxml"));
+            Scene scene = new Scene(root);
+	scene.getStylesheets().add(getClass().getResource("MainChartView.css").toExternalForm());    
+	    
+            stage.setScene(scene);
+            stage.show();
+            login.getScene().getWindow().hide();
+        }
+    	else {
+    		 failedLogin.setText("Username or Password invalid!");
+    	}
+    }
+    public void closeLogin(){
+    	
+    }
     
         
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+       
+       
+       user.setOnKeyPressed(e ->{
+			if (e.getCode()==KeyCode.ENTER){
+				try {
+					verify();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		password.setOnKeyPressed(e ->{
+			if (e.getCode()==KeyCode.ENTER){
+				try {
+					verify();
+				} catch (Exception e1) {
+					
+					e1.printStackTrace();
+				}
+			}
+		});
     }    
     
 }

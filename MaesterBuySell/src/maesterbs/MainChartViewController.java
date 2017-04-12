@@ -111,7 +111,7 @@ public class MainChartViewController implements Initializable {
         
         logger.logEntry(current.getCurrentName(), currentdate, userStock, 
         		Integer.toString(userMA), userChoice);
-        ///////////////////////////////GET DATES/////////////////////////////////////////
+
         //clear old chart data
         mainChart.getData().clear();
 
