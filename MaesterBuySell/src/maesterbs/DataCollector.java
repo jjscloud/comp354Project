@@ -149,7 +149,7 @@ public class DataCollector {
 
                     //Dates
                     int dateYear = Integer.parseInt(numbers[dateIndex].substring(0,4));
-                    int dateMonth = Integer.parseInt(numbers[dateIndex].substring(5,7));
+                    int dateMonth = Integer.parseInt(numbers[dateIndex].substring(5,7))-1;// -1 because the indexing starts at 0
                     int dateDay = Integer.parseInt(numbers[dateIndex].substring(8,10));
                     GregorianCalendar newDate = new GregorianCalendar(dateYear, dateMonth, dateDay);
                     dates.add(newDate);
