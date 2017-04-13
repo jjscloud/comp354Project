@@ -234,7 +234,7 @@ public class DataCollector {
         StockDataDownloader currentStockData= new StockDataDownloader(symbol, startDay, today);
 
         //reordering the arrays so that the most recent data is last
-        prepareData(currentStockData);
+        prepareData(currentStockData, rangeHD);
 
         //updating Short and Long Term Moving Averages
         UpdateMAs(rangeMA);
@@ -252,24 +252,39 @@ public class DataCollector {
 
     // internal method to reorder the arrays so that the most recent data is last,
     // then assign date and current price arrayLists
-    private void prepareData(StockDataDownloader sd)
+    private void prepareData(StockDataDownloader sd, int rangeHD)
     {
+        // trimming the array lists
+        sd.closes.trimToSize();
+        sd.dates.trimToSize();
+
+       // Find the end of the HD Range
+        GregorianCalendar targetDate = new GregorianCalendar();
+        targetDate.add(Calendar.YEAR, -rangeHD);
+
+        int targetIndex_300 = 0;
+        int targetIndex_HD = 0;
+
+        for(int counter = 0; counter < sd.closes.size(); counter++)// starting from today and going backwards in time
+        {
+            if(sd.dates.get(counter).before(targetDate)) // when passed HD Range target date
+            {
+                targetIndex_HD = counter-1; // to get the index right before passing the HD Range target date
+                targetIndex_300 = targetIndex_HD+300; // to get the index 300 indices past the HD Range target date (in actuality, 300 days in the past)
+                break;
+            }
+        }
+
         // clear past data
         closingPrices = new ArrayList<Double>();
         dates = new ArrayList<GregorianCalendar>();
 
-        sd.closes.trimToSize(); // trimming the array list of closing prices
-        sd.dates.trimToSize();
-
-        // ARTIFACT BUG: For some reason, the following loop is related to the artifact problem
-        for(int counter = 0; counter < sd.closes.size(); counter++)
+        // add data from sd to closingPrices and dates in reverse order, starting from targetIndex_300
+        for(int counter = targetIndex_300; counter >= 0; counter--)
         {
-            int index = sd.closes.size()-counter-1;
-            closingPrices.add(sd.closes.get(index));
-            dates.add(sd.dates.get(index));
+            closingPrices.add(sd.closes.get(counter));
+            dates.add(sd.dates.get(counter));
         }
-        //closingPrices =  sd.closes; //line for ARTIFACT BUG test purposes
-        //dates = sd.dates; //line for ARTIFACT BUG test purposes
 
         closingPrices.trimToSize();
         dates.trimToSize();
@@ -289,6 +304,8 @@ public class DataCollector {
             String dayOfMonth = dates.get(counter).getTime().toString().substring(8,10);
             String year = dates.get(counter).getTime().toString().substring(24);
             dateStrings.add(month + " " + dayOfMonth + " " + year);
+
+            System.out.println(counter + ": " + dates.get(counter).getTime().toString() + " " + closingPrices.get(counter));
         }
 
         dateStrings.trimToSize();
@@ -373,7 +390,7 @@ public class DataCollector {
         else
         {
             newDate.add(newDate.YEAR, -historicalDataRange); // add -1, -2 or -5 years
-            newDate.add(newDate.DATE, -300);// add -300 days
+            newDate.add(newDate.YEAR, -2);//add an extra 2 years of data
         }
 
         return newDate;
